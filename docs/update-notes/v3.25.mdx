@@ -133,6 +133,8 @@ Small changes that make a big difference in your daily workflow:
 * **Marketplace Updates**: Auto-refresh marketplace data when organization settings change ([#6446](https://github.com/RooCodeInc/Roo-Code/pull/6446))
 * **`codebase_search` Tool**: Clarified that the `path` parameter is optional and the tool searches the entire workspace by default
 * **Token Usage Reporting**: Fixed an issue where token usage and cost were underreported, providing more accurate cost tracking
+* **Enhanced Task History**: Made "enhance with task history" default to true for better context retention in conversations
+* **Improved Scrollbar**: Fixed scrollbar jumping in long conversations by removing the 500-message limit
 
 ### Bug Fixes
 
@@ -189,6 +191,9 @@ Critical fixes that improve stability and compatibility:
 * **`max_tokens` Calculation**: Fixed an error for models with very large context windows where requests would fail due to incorrect calculation of maximum output tokens
 * **AWS Bedrock Connection**: Fixed a connection issue when using AWS Bedrock with LiteLLM
 * **Search Tool Reliability**: Fixed the search_files tool failing when encountering permission-denied files - it now continues working and returns results from accessible files
+* **Native Ollama API**: Fixed Ollama models to use native API instead of OpenAI compatibility layer for improved performance and reliability
+* **Terminal Reuse**: Fixed terminal reuse logic to properly handle terminal lifecycle management
+* **LM Studio Models**: Fixed duplicate model entries by implementing case-insensitive deduplication, ensuring models appear only once in the provider configuration
 
 ### Provider Updates
 
@@ -196,6 +201,7 @@ Critical fixes that improve stability and compatibility:
   - `gpt-5-2025-08-07`: The full GPT-5 model, now set as the default for OpenAI Native provider
   - `gpt-5-mini-2025-08-07`: A smaller, faster variant for quick responses
   - `gpt-5-nano-2025-08-07`: The most compact version for resource-constrained scenarios
+  - `gpt-5-chat-latest`: Optimized for conversational AI and non-reasoning tasks
 * **GPT-5 Verbosity Controls**: New settings to control model output detail levels (low, medium, high), allowing you to fine-tune response length and detail based on your needs
 * **Fireworks AI Models**: Added GLM-4.5 series models (355B and 106B parameters with 128K context) and OpenAI gpt-oss models (20b for edge deployments, 120b for production use) to expand model selection options
 * **Claude Opus 4.1 Support**: Added support for the new Claude Opus 4.1 model across Anthropic, Claude Code, Bedrock, Vertex AI, and LiteLLM providers with 8192 max tokens, reasoning budget support, and prompt caching
