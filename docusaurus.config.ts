@@ -265,7 +265,7 @@ const config: Config = {
           // Redirect /roo to Roo Code Cloud documentation
           {
             to: '/providers/roo-code-cloud',
-            from: ['/roo'],
+            from: ['/providers/roo'],
           },
         ],
       },
