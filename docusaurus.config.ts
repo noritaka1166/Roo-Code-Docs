@@ -262,6 +262,11 @@ const config: Config = {
             to: '/advanced-usage/roo-code-nightly',
             from: ['/advanced-usage/prerelease-build'],
           },
+          // Redirect /roo to Roo Code Cloud documentation
+          {
+            to: '/providers/roo-code-cloud',
+            from: ['/roo'],
+          },
         ],
       },
     ],
