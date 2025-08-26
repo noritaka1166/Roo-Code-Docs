@@ -177,6 +177,7 @@ const sidebars: SidebarsConfig = {
         'providers/openai',
         'providers/openai-compatible',
         'providers/openrouter',
+        'providers/qwen-code',
         'providers/requesty',
         'providers/roo-code-cloud',
         'providers/sambanova',
@@ -209,6 +210,14 @@ const sidebars: SidebarsConfig = {
       label: 'Update Notes',
       items: [
         'update-notes/index',
+        {
+          type: 'category',
+          label: '3.26',
+          items: [
+            { type: 'doc', id: 'update-notes/v3.26', label: '3.26 Combined' },
+            { type: 'doc', id: 'update-notes/v3.26.0', label: '3.26.0' },
+          ],
+        },
         {
           type: 'category',
           label: '3.25',
