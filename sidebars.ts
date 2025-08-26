@@ -182,6 +182,7 @@ const sidebars: SidebarsConfig = {
         'providers/roo-code-cloud',
         'providers/sambanova',
         'providers/unbound',
+        'providers/vercel-ai-gateway',
         'providers/vertex',
         'providers/vscode-lm',
         'providers/xai',
