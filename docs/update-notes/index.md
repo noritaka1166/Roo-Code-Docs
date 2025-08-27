@@ -14,16 +14,16 @@ image: /img/social-share.jpg
 
 # Update Notes
 
-This section contains notes about recent updates to Roo Code, listed by version number.
+
 ---
 
-## Version 3.26
+### Version 3.26
 
 *   [3.26.0](/update-notes/v3.26.0) (2025-08-26)
 
 ---
 
-## Version 3.25
+### Version 3.25
 
 *   [3.25](/update-notes/v3.25) (Combined)
 *   [3.25.23](/update-notes/v3.25.23) (2025-08-22)
@@ -53,13 +53,13 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.24
+### Version 3.24
 
 *   [3.24.0](/update-notes/v3.24.0) (2025-07-26)
 
 ---
 
-## Version 3.23
+### Version 3.23
 
 *   [3.23.19](/update-notes/v3.23.19) (2025-07-23)
 *   [3.23.18](/update-notes/v3.23.18) (2025-07-23)
@@ -84,7 +84,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.22
+### Version 3.22
 
 *   [3.22.6](/update-notes/v3.22.6) (2025-07-02)
 *   [3.22.5](/update-notes/v3.22.5) (2025-06-29)
@@ -97,7 +97,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.21
+### Version 3.21
 
 *   [3.21.5](/update-notes/v3.21.5) (2025-06-23)
 *   [3.21.4](/update-notes/v3.21.4) (2025-06-23)
@@ -108,7 +108,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.20
+### Version 3.20
 
 *   [3.20.3](/update-notes/v3.20.3) (2025-06-14)
 *   [3.20.2](/update-notes/v3.20.2) (2025-06-13)
@@ -118,7 +118,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.19
+### Version 3.19
 
 *   [3.19.7](/update-notes/v3.19.7) (2025-06-11)
 *   [3.19.6](/update-notes/v3.19.6) (2025-06-09)
@@ -132,7 +132,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.18
+### Version 3.18
 
 *   [3.18.5](/update-notes/v3.18.5) (2025-05-27)
 *   [3.18.4](/update-notes/v3.18.4) (2025-05-25)
@@ -143,7 +143,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.17
+### Version 3.17
 
 *   [3.17.2](/update-notes/v3.17.2) (2025-05-15)
 *   [3.17.1](/update-notes/v3.17.1) (2025-05-15)
@@ -152,7 +152,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.16
+### Version 3.16
 
 *   [3.16.6](/update-notes/v3.16.6) (2025-05-12)
 *   [3.16.5](/update-notes/v3.16.5) (2025-05-10)
@@ -164,7 +164,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.15
+### Version 3.15
 
 *   [3.15](/update-notes/v3.15) (2025-05-05)
 *   [3.15.5](/update-notes/v3.15.5) (2025-05-05)
@@ -176,7 +176,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.14
+### Version 3.14
 
 *   [3.14](/update-notes/v3.14) (2025-04-24)
 *   [3.14.3](/update-notes/v3.14.3) (2025-04-25)
@@ -186,7 +186,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.13
+### Version 3.13
 
 *   [3.13](/update-notes/v3.13) (2025-04-18)
 *   [3.13.2](/update-notes/v3.13.2) (2025-04-18)
@@ -195,7 +195,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.12
+### Version 3.12
 
 *   [3.12](/update-notes/v3.12) (2025-04-17)
 *   [3.12.3](/update-notes/v3.12.3) (2025-04-17)
@@ -205,7 +205,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.11
+### Version 3.11
 
 *   [3.11.17](/update-notes/v3.11.17) (2025-04-14)
 *   [3.11.16](/update-notes/v3.11.16) (2025-04-14)
@@ -229,7 +229,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.10
+### Version 3.10
 
 *   [3.10](/update-notes/v3.10) (2025-03-25)
 *   [3.10.5](/update-notes/v3.10.5) (2025-03-25)
@@ -241,7 +241,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.9
+### Version 3.9
 
 *   [3.9](/update-notes/v3.9) (2025-03-19)
 *   [3.9.2](/update-notes/v3.9.2) (2025-03-19)
@@ -250,7 +250,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.8
+### Version 3.8
 
 *   [3.8](/update-notes/v3.8) (2025-03-13)
 *   [3.8.6](/update-notes/v3.8.6) (2025-03-13)
@@ -263,7 +263,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.7
+### Version 3.7
 
 *   [3.7](/update-notes/v3.7) (2025-03-03)
 *   [3.7.12](/update-notes/v3.7.12) (2025-03-03)
@@ -282,7 +282,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.3
+### Version 3.3
 
 *   [3.3](/update-notes/v3.3) (2025-02-27)
 *   [3.3.26](/update-notes/v3.3.26) (2025-02-27)
@@ -315,7 +315,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.2
+### Version 3.2
 
 *   [3.2](/update-notes/v3.2) (2025-02-27)
 *   [3.2.8](/update-notes/v3.2.8)
@@ -328,7 +328,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.1
+### Version 3.1
 
 *   [3.1](/update-notes/v3.1) (2025-02-27)
 *   [3.1.7](/update-notes/v3.1.7)
@@ -341,7 +341,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 3.0
+### Version 3.0
 
 *   [3.0](/update-notes/v3.0) (2025-02-27)
 *   [3.0.3](/update-notes/v3.0.3)
@@ -351,7 +351,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 2.2
+### Version 2.2
 
 *   [2.2](/update-notes/v2.2) (2025-02-27)
 *   [2.2.46](/update-notes/v2.2.46)
@@ -398,7 +398,7 @@ This section contains notes about recent updates to Roo Code, listed by version 
 
 ---
 
-## Version 2.1
+### Version 2.1
 
 *   [2.1](/update-notes/v2.1) (2025-02-27)
 *   [2.1.21](/update-notes/v2.1.21)
