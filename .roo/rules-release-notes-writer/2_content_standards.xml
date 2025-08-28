@@ -68,7 +68,7 @@ We've [improvement description] (thanks [contributors]!) ([#PR](link)):
 
 [Concluding sentence about impact]
 
-> **📚 Documentation**: See [Feature Guide](/docs/path/to/feature) for detailed usage instructions.
+> **📚 Documentation**: See [Feature Guide](/path/to/feature) for detailed usage instructions.
         ]]></template>
       </category>
       
@@ -111,7 +111,7 @@ Description of what the feature does (thanks contributor!) ([#PR](link)):
 
 Concluding sentence about the benefit.
 
-> **📚 Documentation**: See [Feature Guide](/docs/path/to/feature) for detailed usage.
+> **📚 Documentation**: See [Feature Guide](/path/to/feature) for detailed usage.
       ]]></format>
     </expanded_sections>
 
@@ -202,22 +202,22 @@ Concluding sentence about the benefit.
 
   <documentation_links>
     <patterns>
-      <inline>[Feature Name](/docs/path/to/feature)</inline>
+      <inline>[Feature Name](/path/to/feature)</inline>
       <see_also><![CDATA[
-> **📚 Documentation**: See [Feature Guide](/docs/path) for detailed usage instructions.
+> **📚 Documentation**: See [Feature Guide](/path) for detailed usage instructions.
       ]]></see_also>
       <migration><![CDATA[
-> **🔄 Migration Guide**: If upgrading from v[OLD], see our [migration guide](/docs/migration/vX-to-vY).
+> **🔄 Migration Guide**: If upgrading from v[OLD], see our [migration guide](/migration/vX-to-vY).
       ]]></migration>
     </patterns>
     <auto_linking>
-      - Modes: /docs/features/modes/[mode-slug]
-      - Tools: /docs/advanced-usage/available-tools#[tool-name]
-      - MCP: /docs/features/mcp/
-      - Providers: /docs/providers/
+      - Modes: /features/modes/[mode-slug]
+      - Tools: /advanced-usage/available-tools#[tool-name]
+      - MCP: /features/mcp/
+      - Providers: /providers/
     </auto_linking>
     <rules>
-      - Use absolute paths from /docs/ root
+      - Use absolute paths starting from root (without /docs prefix)
       - No .md extensions in links
       - All major features must have documentation links
     </rules>
@@ -329,7 +329,7 @@ These releases include 18 improvements across bug fixes, provider updates, QOL e
       <from>([#PR](link))</from>
       <to>(remove entirely)</to>
       
-      <from>/docs/path/to/feature</from>
+      <from>/path/to/feature</from>
       <to>https://docs.roocode.com/path/to/feature</to>
       
       <from>## Major Features</from>
