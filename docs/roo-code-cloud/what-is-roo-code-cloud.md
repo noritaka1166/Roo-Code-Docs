@@ -1,7 +1,9 @@
 ---
-description: Discover Roo Code Cloud, the web platform that extends your Roo Code extension with cloud features for collaboration, persistence, and analytics.
+description: Roo Code Cloud extends your VS Code extension with cloud-based task syncing, sharing, usage analytics, and remote control capabilities.
 keywords:
   - Roo Code Cloud
+  - Roomote Control
+  - Remote Control
   - AI development platform
   - cloud features
   - collaboration
