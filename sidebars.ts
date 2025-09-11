@@ -50,6 +50,7 @@ const sidebars: SidebarsConfig = {
         'roo-code-cloud/login',
         'roo-code-cloud/dashboard',
         'roo-code-cloud/task-sharing',
+        'roo-code-cloud/task-sync',
         'roo-code-cloud/billing-subscriptions',
         'roo-code-cloud/roomote-control',
       ],
@@ -217,6 +218,13 @@ const sidebars: SidebarsConfig = {
       label: 'Update Notes',
       items: [
         'update-notes/index',
+        {
+          type: 'category',
+          label: '3.28',
+          items: [
+            { type: 'doc', id: 'update-notes/v3.28.0', label: '3.28.0' },
+          ],
+        },
         {
           type: 'category',
           label: '3.27',
