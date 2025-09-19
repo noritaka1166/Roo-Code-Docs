@@ -43,11 +43,11 @@ import styles from '@easyops-cn/docusaurus-search-local/dist/client/client/theme
 
 async function fetchAutoCompleteJS() {
   const autoCompleteModule = await import('@easyops-cn/autocomplete.js');
-  const autoComplete = autoCompleteModule.default as any;
-  if ((autoComplete as any).noConflict) {
-    (autoComplete as any).noConflict();
-  } else if ((autoCompleteModule as any).noConflict) {
-    (autoCompleteModule as any).noConflict();
+  const autoComplete = autoCompleteModule.default;
+  if (autoComplete.noConflict) {
+    autoComplete.noConflict();
+  } else if (autoCompleteModule.noConflict) {
+    autoCompleteModule.noConflict();
   }
   return autoComplete;
 }
@@ -263,7 +263,7 @@ export default function SearchBar(): JSX.Element {
 
     if (focusAfterIndexLoaded.current) {
       const input = searchBarRef.current!;
-      if ((input as any).value) {
+      if (input.value) {
         search.current?.autocomplete.open();
       }
       input.focus();
@@ -311,7 +311,7 @@ export default function SearchBar(): JSX.Element {
     : false;
 
   useEffect(() => {
-    const searchBar = searchBarRef.current as any;
+    const searchBar = searchBarRef.current;
     const domValue = searchBar?.value;
     if (domValue) {
       setInputValue(domValue);
