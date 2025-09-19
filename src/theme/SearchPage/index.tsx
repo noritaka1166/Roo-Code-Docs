@@ -202,8 +202,7 @@ function SearchPageContent() {
           ))}
 
         <section>
-          {searchResults &&
-            searchResults.map((item) => <SearchResultItem key={item.document.i} searchResult={item} />)}
+          {searchResults?.map((item) => <SearchResultItem key={item.document.i} searchResult={item} />)}
         </section>
       </div>
     </React.Fragment>
