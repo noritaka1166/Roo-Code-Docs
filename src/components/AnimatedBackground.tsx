@@ -208,8 +208,8 @@ export function AnimatedBackground() {
 
       for (let a = 0; a < particles.length; a++) {
         for (let b = a; b < particles.length; b++) {
-          const dx = particles[a]!.x - particles[b]!.x
-          const dy = particles[a]!.y - particles[b]!.y
+          const dx = particles[a].x - particles[b].x
+          const dy = particles[a].y - particles[b].y
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < maxDistance) {
@@ -217,8 +217,8 @@ export function AnimatedBackground() {
             ctx.strokeStyle = `rgba(100, 150, 255, ${opacity})`
             ctx.lineWidth = 0.5
             ctx.beginPath()
-            ctx.moveTo(particles[a]!.x, particles[a]!.y)
-            ctx.lineTo(particles[b]!.x, particles[b]!.y)
+            ctx.moveTo(particles[a].x, particles[a].y)
+            ctx.lineTo(particles[b].x, particles[b].y)
             ctx.stroke()
           }
         }
@@ -253,16 +253,16 @@ export function AnimatedBackground() {
       if (!canvas) throw new Error("Canvas is null (not initialized?)")
 
       // Calculate direction vector
-      const dx = targetX - gradientPoints[0]!.x
-      const dy = targetY - gradientPoints[0]!.y
+      const dx = targetX - gradientPoints[0].x
+      const dy = targetY - gradientPoints[0].y
 
       // Smooth movement using linear interpolation
-      gradientPoints[0]!.x += dx * moveSpeed
-      gradientPoints[0]!.y += dy * moveSpeed
+      gradientPoints[0].x += dx * moveSpeed
+      gradientPoints[0].y += dy * moveSpeed
 
       // Adjust radius based on distance to target
       const distanceToTarget = Math.sqrt(dx * dx + dy * dy)
-      gradientPoints[0]!.radius = Math.max(
+      gradientPoints[0].radius = Math.max(
         canvas.width * 0.2,
         Math.min(canvas.width * 0.4, canvas.width * 0.3 + distanceToTarget * 0.1),
       )
