@@ -44,6 +44,18 @@ image: /img/social-share.jpg
         <location>Below title</location>
         <example>This release adds context condensing, improves performance, and fixes UI bugs.</example>
       </element>
+
+      <element name="inline_hero_image">
+        <location>Immediately after the intro summary sentence</location>
+        <rules>
+          - Insert only if frontmatter image path resolves to "/img/..." and is not "/img/social-share.jpg"
+          - Use an HTML image tag per site rules with width="600"
+          - Set src from .roo/tmp/release-notes/frontmatter_image_v[version].txt and alt to "Roo Code v[VERSION] Release"
+        </rules>
+        <template><![CDATA[
+<img src="/img/vX.Y.Z/vX.Y.Z.png" alt="Roo Code vX.Y.Z Release" width="600" />
+        ]]></template>
+      </element>
     </required_elements>
   </file_structure>
 

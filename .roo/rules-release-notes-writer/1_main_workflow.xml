@@ -445,6 +445,19 @@ Which features should I highlight with expanded sections in the release notes?
             - Otherwise set "image" to /img/social-share.jpg
           </behavior>
         </frontmatter_image>
+        <inline_hero_image>
+          <source>.roo/tmp/release-notes/frontmatter_image_v[version].txt</source>
+          <insertion_point>Immediately after the intro summary sentence below the H1 title</insertion_point>
+          <behavior>
+            - If the persisted path starts with "/img/" and is not "/img/social-share.jpg", insert an HTML image tag under the intro paragraph
+            - Use the exact path value from the source file for src
+            - Follow .roorules Image Tag Format and use width="600"
+            - If the persisted path is "/img/social-share.jpg", skip inline insertion
+          </behavior>
+          <html_snippet><![CDATA[
+<img src="[FRONTMATTER_IMAGE_PATH]" alt="Roo Code v[VERSION] Release" width="600" />
+          ]]></html_snippet>
+        </inline_hero_image>
       </step>
       
       <step number="4">
