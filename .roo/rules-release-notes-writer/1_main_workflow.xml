@@ -1,7 +1,7 @@
 <workflow_instructions>
   <mode_overview>
     Automates creating release notes for new Roo Code versions. Fetches pull requests
-    from GitHub, analyzes changes, generates user-focused notes, and handles Discord
+    from GitHub, analyzes changes, generates user-focused notes, and handles Discord and Reddit
     formatting. Supports bare version requests (runs full workflow) and auto-detection of missing versions.
   </mode_overview>
 
@@ -26,6 +26,10 @@
       <trigger>latest</trigger>
       <action>Auto-detect missing versions from changelog</action>
     </pattern>
+  <pattern type="reddit_only">
+    <trigger>Reddit release notes for X.Y.Z</trigger>
+    <action>Generate Reddit format from existing files</action>
+  </pattern>
   </entry_patterns>
 
   <critical_date_format>
@@ -1870,7 +1874,7 @@ Which features should I highlight with expanded sections in the release notes?
 
   <special_workflows>
     <workflow name="discord_only">
-      <description>Generate Discord format from existing release files</description>
+      <description>Generate Discord format from existing release files and also produce Reddit variant</description>
       <transformations>
         - Remove PR links and numbers
         - Convert /path to https://docs.roocode.com/path
@@ -1941,6 +1945,10 @@ echo "]"
       </process>
       <handoff>After the user selects versions to process, use the simplified PR extraction for each selected version</handoff>
     </workflow>
+    <workflow name="reddit_only">
+      <description>Generate Reddit format from existing release files and also produce Discord variant</description>
+      <output>Formatted text (no files created)</output>
+    </workflow>
   </special_workflows>
 
   <simplified_pr_extraction_guide>
@@ -1988,6 +1996,9 @@ gh pr list --repo RooCodeInc/Roo-Code --state merged --base main --limit 1000 \
     </rule>
     <rule priority="HIGH">
       QOL Improvements section MUST come before Bug Fixes
+    </rule>
+    <rule priority="HIGH">
+      When the user asks for Discord or Reddit notes, output both variants in a single response
     </rule>
   </critical_rules>
 </workflow_instructions>

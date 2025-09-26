@@ -188,37 +188,56 @@ Which would you like to process?</question>
 
   <discord_format_interaction>
     <trigger>Discord release notes for X.Y.Z</trigger>
-    <options>
-      <single_version>Generate Discord format for one version</single_version>
-      <multiple_versions>Combine multiple versions</multiple_versions>
-      <compression>Compress minor items if over 2000 chars or on request</compression>
-    </options>
+    <behavior>
+      <rule>Immediately generate Discord and Reddit posts using social_formatting rules (no prompt).</rule>
+      <rule>Only ask if the user requests "compress"/"condense", or if content exceeds 2000 chars.</rule>
+    </behavior>
+    <formatting_checklist>
+      <item>Title uses ":rocket:" and "Release Updates" (single or X.Y.Z-X.Y.Z for combined)</item>
+      <item>Include "@everyone" tagline line with short hero summary under the title</item>
+      <item>Section order: Fixed: GPT-5-Codex errors and others!, Context condensing fix, More free models on Roo Code Cloud, More Changes</item>
+      <item>Use hyphen bullets "- " only; no emojis in section headers</item>
+      <item>Hero sentence for GPT-5-Codex copied EXACTLY from docs (preserve PR link); other sections remove PR links</item>
+      <item>Footer blurb: See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (single) or [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) | [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (combined)</item>
+      <item>Wrap entire output in ```markdown code block</item>
+    </formatting_checklist>
     <compression_workflow>
       <trigger>User says "compress", "condense", or content exceeds 2000 chars</trigger>
       <steps>
-        <step>Keep Feature Highlights section intact</step>
-        <step>Count all improvements below Feature Highlights</step>
-        <step>Replace all sections with single "Other Improvements and Fixes" paragraph</step>
-        <step>Include contributor acknowledgments in compressed section</step>
+        <step>Preserve the "Fixed: GPT-5-Codex..." section intact</step>
+        <step>Summarize remaining content into a single "More Changes" paragraph with total count and contributor thanks</step>
       </steps>
       <validation>
-        <item>Verify actual count of improvements (not estimate)</item>
-        <item>Ensure all contributors are acknowledged</item>
-        <item>Maintain markdown code block wrapper</item>
+        <item>Verify actual count of changes</item>
+        <item>Maintain markdown code block and hyphen bullets</item>
       </validation>
-    </compression_workflow>
-    <template><![CDATA[
+      <template><![CDATA[
 <ask_followup_question>
-<question>How would you like the Discord announcement formatted?</question>
+<question>The Discord post is long. Compress remaining sections into a single "More Changes" paragraph?</question>
 <follow_up>
-<suggest>Standard format with all details</suggest>
-<suggest>Compressed format (group minor items)</suggest>
-<suggest>Highlights only (major features)</suggest>
-<suggest>Multiple versions combined</suggest>
+<suggest>Yes, compress remaining sections</suggest>
+<suggest>No, keep full details</suggest>
 </follow_up>
 </ask_followup_question>
-    ]]></template>
+      ]]></template>
+    </compression_workflow>
   </discord_format_interaction>
+
+  <reddit_format_interaction>
+    <trigger>Reddit release notes for X.Y.Z</trigger>
+    <behavior>
+      <rule>Immediately generate Reddit and Discord posts using social_formatting rules (no prompt).</rule>
+    </behavior>
+    <formatting_checklist>
+      <item>Title (plain text): "Roo Code X.Y.Z-X.Y.Z Release Updates | FREE models | GPT‑5‑Codex tool‑usage fix | More fixes!"</item>
+      <item>Intro italic note present</item>
+      <item>Section order: More free models on Roo Code Cloud, Fixed: GPT-5-Codex errors and others!, Context condensing fix, More Changes</item>
+      <item>Use hyphen bullets "- " only; no emojis, no @everyone</item>
+      <item>Wrap entire output in ```markdown code block</item>
+      <item>Remove PR links everywhere</item>
+      <item>Footer blurb: See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (single) or [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) | [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (combined)</item>
+    </formatting_checklist>
+  </reddit_format_interaction>
 
   <discord_combined_interaction>
     <trigger>Combined Discord announcement for multiple versions</trigger>
@@ -229,23 +248,20 @@ Which would you like to process?</question>
       <step>Present formatted output in markdown code block</step>
     </workflow>
     <formatting_checklist>
-      <item>Title uses version range (X.Y.Z-X.Y.Z)</item>
-      <item>Intro sentence summarizes all versions</item>
-      <item>Features merged and deduplicated</item>
-      <item>No version numbers in body text</item>
-      <item>Footer has links to each version</item>
-      <item>Entire output wrapped in ```markdown block</item>
-      <item>No "Happy coding!" or similar closings</item>
-      <item>"Feature Highlights" not "Major Features"</item>
+      <item>Title uses ":rocket:" and version range (X.Y.Z-X.Y.Z) with "Release Updates"</item>
+      <item>Include "@everyone" tagline line with short hero summary</item>
+      <item>Section order: Fixed: GPT-5-Codex errors and others!, Context condensing fix, More free models on Roo Code Cloud, More Changes</item>
+      <item>Use hyphen bullets "- " only; no emojis in section headers</item>
+      <item>Hero sentence copied EXACTLY with PR link preserved</item>
+      <item>Footer links as hyphen bullets to each version's docs page</item>
+      <item>Wrap entire output in ```markdown code block</item>
     </formatting_checklist>
     <template><![CDATA[
 <ask_followup_question>
-<question>I'll create a combined Discord announcement for versions [list]. Should I:</question>
+<question>If the combined post is long, should I compress minor sections into a single "More Changes" paragraph?</question>
 <follow_up>
-<suggest>Include all features and changes from all versions</suggest>
-<suggest>Focus on major features only</suggest>
-<suggest>Group similar changes across versions</suggest>
-<suggest>Create separate announcements for each version</suggest>
+<suggest>Yes, compress if needed</suggest>
+<suggest>No, keep full details</suggest>
 </follow_up>
 </ask_followup_question>
     ]]></template>

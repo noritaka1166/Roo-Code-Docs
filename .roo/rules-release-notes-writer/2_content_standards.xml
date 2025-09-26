@@ -247,113 +247,140 @@ Concluding sentence about the benefit.
 
   <discord_formatting>
     <overview>
-      Special formatting rules for Discord announcements to ensure readability
-      and engagement in chat format.
+      Special formatting rules for Discord announcements that reflect our latest house style and the final transformation flow.
     </overview>
 
     <structure>
       <element name="wrapper">
         <format>```markdown ... ```</format>
-        <description>Entire announcement wrapped in markdown code block</description>
+        <description>Wrap the entire announcement in a markdown code block</description>
       </element>
-      
+
       <element name="title">
-        <format># 🚀 Roo Code X.Y.Z Release Notes</format>
-        <format_combined># 🚀 Roo Code X.Y.Z-X.Y.Z Release Updates</format_combined>
+        <format># :rocket: Roo Code X.Y.Z Release Updates</format>
+        <format_combined># :rocket: Roo Code X.Y.Z-X.Y.Z Release Updates</format_combined>
         <rules>
-          - Always include rocket emoji
-          - Use "Release Notes" for single version
-          - Use "Release Updates" for combined versions
+          - Use :rocket: shortcode (not the emoji)
+          - Use "Release Updates" (not "Release Notes") for both single and combined versions
+          - For combined announcements, use "X.Y.Z-X.Y.Z" range formatting
         </rules>
       </element>
 
-      <element name="intro_sentence">
-        <format>We've shipped [updates/an update] with [feature summary]!</format>
+      <element name="tagline">
+        <format>@everyone [short hero summary]</format>
         <rules>
-          - Must summarize key features
-          - No marketing language ("powerful", "revolutionary")
-          - Be specific about what's included
+          - Discord only (omit from Reddit)
+          - Keep to a single concise line (e.g., "GPT‑5‑Codex tool‑usage fix, more FREE models on Roo Code Cloud and more!")
         </rules>
-        <examples>
-          <single>We've shipped an update with subtask todo lists, Vertex AI grounding, and performance improvements!</single>
-          <combined>We've shipped three updates with subtask todo lists, Vertex AI grounding features, Kimi K2 prompt caching, and the new Featherless provider!</combined>
-        </examples>
       </element>
 
       <element name="sections">
         <order>
-          1. ## ✨ Feature Highlights (not "Major Features")
-          2. ## 🎯 Provider Updates
-          3. ## 💪 QOL Improvements
-          4. ## 🐛 Bug Fixes
-          5. ## 🔧 Additional Improvements
+          1. ## Fixed: GPT-5-Codex errors and others!
+          2. ## Context condensing fix
+          3. ## More free models on Roo Code Cloud
+          4. ## More Changes
         </order>
         <rules>
-          - Use emojis for section headers
-          - "Feature Highlights" instead of "Major Features"
-          - Keep descriptions concise for chat readability
+          - No emojis in section headers
+          - In "Fixed: GPT-5-Codex...", copy the leading sentence EXACTLY from docs (include the PR link if present)
+          - Under that hero sentence, include the three bullets verbatim; render bullets as "- " hyphens
         </rules>
       </element>
 
-      <element name="compression_pattern">
-        <description>When user requests compression or content is too long</description>
-        <trigger>User says "compress" or "condense"</trigger>
-        <format><![CDATA[
-## 🔧 Other Improvements and Fixes
-
-These releases include [COUNT] improvements across bug fixes, provider updates, QOL enhancements, and misc updates. Thanks to [contributor1], [contributor2], [contributor3], and all other contributors who made these releases possible!
-        ]]></format>
+      <element name="footer_blurb">
+        <format_single><![CDATA[
+See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z)
+        ]]></format_single>
+        <format_combined><![CDATA[
+See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) | [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z)
+        ]]></format_combined>
         <rules>
-          - Replace all sections below "Feature Highlights" with single paragraph
-          - Count actual number of improvements (not estimate)
-          - List specific contributor names from the releases
-          - Use "Other Improvements and Fixes" as section title
-          - Include all contributor acknowledgments in one place
-        </rules>
-        <example><![CDATA[
-## 🔧 Other Improvements and Fixes
-
-These releases include 18 improvements across bug fixes, provider updates, QOL enhancements, and misc updates. Thanks to anguslees, DarinVerheijke, semidark, elianiva, and all other contributors who made these releases possible!
-        ]]></example>
-      </element>
-
-      <element name="footer">
-        <format_single>📚 **Full Release Notes** [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z)</format_single>
-        <format_combined>📚 **Full Release Notes** [vX.Y.Z](link) | [vX.Y.Z](link) | [vX.Y.Z](link)</format_combined>
-        <rules>
-          - Use book emoji
-          - Bold "Full Release Notes"
-          - Markdown link format with version as link text
-          - Pipe separator for multiple versions
+          - Use markdown inline links with the version as the anchor text
+          - For multiple versions, join links with " | "
         </rules>
       </element>
     </structure>
 
     <content_rules>
       <rule priority="critical">No version numbers in body text (only header/footer)</rule>
-      <rule priority="critical">Never use the word "powerful" or similar marketing terms</rule>
-      <rule priority="high">Remove all PR numbers and links</rule>
-      <rule priority="high">Keep contributor thanks but remove PR references</rule>
-      <rule priority="high">No closing phrases like "Happy coding!"</rule>
-      <rule priority="medium">Use bullet points (•) instead of asterisks (*)</rule>
-      <rule priority="medium">Group minor items if over 2000 characters</rule>
+      <rule priority="critical">Never use marketing language</rule>
+      <rule priority="high">Retain PR link ONLY in the hero GPT‑5‑Codex section; remove PR links/numbers elsewhere</rule>
+      <rule priority="high">Convert any relative docs links to absolute https://docs.roocode.com paths</rule>
+      <rule priority="high">Use hyphen bullets ("- ") everywhere</rule>
+      <rule priority="medium">If long or on request, summarize remaining items into a single "More Changes" paragraph with contributor thanks and total change count</rule>
     </content_rules>
 
     <transformations>
-      <from>([#PR](link))</from>
-      <to>(remove entirely)</to>
-      
-      <from>/path/to/feature</from>
-      <to>https://docs.roocode.com/path/to/feature</to>
-      
-      <from>## Major Features</from>
-      <to>## ✨ Feature Highlights</to>
-      
       <from>* </from>
-      <to>• </to>
-      
-      <from>Happy coding! 🦘</from>
-      <to>(remove entirely)</to>
+      <to>- </to>
+
+      <from>([#PR](link))</from>
+      <to>(remove everywhere except retain in the hero GPT‑5‑Codex section)</to>
+
+      <from>/path/to/page</from>
+      <to>https://docs.roocode.com/path/to/page</to>
     </transformations>
   </discord_formatting>
+
+  <reddit_formatting>
+    <overview>
+      Formatting for Reddit announcements, paired with Discord output by default.
+    </overview>
+
+    <structure>
+      <element name="wrapper">
+        <format>```markdown ... ```</format>
+        <description>Wrap the entire announcement in a markdown code block</description>
+      </element>
+      <element name="title">
+        <format>Roo Code X.Y.Z-X.Y.Z Release Updates | FREE models | GPT‑5‑Codex tool‑usage fix | More fixes!</format>
+        <rules>
+          - Plain text line (no leading "#")
+          - Include the three-part summary fragments as shown
+        </rules>
+      </element>
+
+      <element name="intro_note">
+        <format>*In case you did not know, r/RooCode is a Free and Open Source VS Code AI Coding extension.*</format>
+      </element>
+
+      <element name="sections">
+        <order>
+          1. ## More free models on Roo Code Cloud
+          2. ## Fixed: GPT-5-Codex errors and others!
+          3. ## Context condensing fix
+          4. ## More Changes
+        </order>
+        <rules>
+          - Wrap entire output in a markdown code block
+          - No @everyone line
+          - No emojis in section headers
+          - Use hyphen bullets ("- ")
+          - Remove PR links everywhere (including hero)
+        </rules>
+      </element>
+
+      <element name="footer_blurb">
+        <format_single><![CDATA[
+See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z)
+        ]]></format_single>
+        <format_combined><![CDATA[
+See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) | [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z)
+        ]]></format_combined>
+      </element>
+    </structure>
+
+    <content_rules>
+      <rule priority="critical">No version numbers in body text</rule>
+      <rule priority="high">Remove all PR numbers and links</rule>
+      <rule priority="high">Use absolute docs links</rule>
+      <rule priority="high">Use hyphen bullets ("- ")</rule>
+    </content_rules>
+  </reddit_formatting>
+
+  <cross_posting>
+    <rule>When the user asks for Discord notes, also produce Reddit notes in the same response.</rule>
+    <rule>When the user asks for Reddit notes, also produce Discord notes in the same response.</rule>
+  </cross_posting>
 </content_standards>
