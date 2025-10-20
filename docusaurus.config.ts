@@ -38,7 +38,11 @@ const config: Config = {
   projectName: 'Roo-Code-Docs',
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   // Custom fields for client-side access
   customFields: {
@@ -81,6 +85,7 @@ const config: Config = {
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
         docsRouteBasePath: "/",
+        indexBlog: false,
         searchContextByPaths: [
           { label: "Getting Started", path: "getting-started" },
           { label: "Basic Usage", path: "basic-usage" },
