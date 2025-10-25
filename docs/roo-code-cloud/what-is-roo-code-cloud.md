@@ -1,45 +1,44 @@
 ---
-description: Roo Code Cloud extends your VS Code extension with cloud-based task syncing, sharing, usage analytics, and remote control capabilities.
+description: Roo Code Cloud extends your VS Code extension with cloud task syncing and sharing, remote IDE control (Roomote), usage analytics, and optional Cloud Agents—using your own model API keys.
 keywords:
   - Roo Code Cloud
   - Roomote Control
   - Remote Control
-  - AI development platform
+  - Cloud Agents
   - cloud features
   - collaboration
   - task history
   - usage analytics
+  - BYO keys
 image: /img/social-share.jpg
 ---
 
 # What is Roo Code Cloud?
 
-Roo Code Cloud is a web-based platform that extends your Roo Code extension with cloud-powered features. By connecting your local VS Code extension to the cloud, you unlock task sharing, usage analytics, and remote control options that enhance your AI-assisted development workflow.
+Roo Code Cloud is the web platform companion to the Roo Code VS Code extension. It extends the extension's functionality (task syncing and sharing, usage analytics, remote control (Roomote Control)) and allows you to run tasks in the cloud, completely independent from the extension, via Cloud Agents.
 
-## Features
+Some of the functionality is free, some of it is paid. All of it follows our philosophy of being model-agnostic and letting you bring your provider key to stay in control of inference models and costs.
 
-### [Login & Account Management](/roo-code-cloud/login)
-Connect your Roo Code extension to the cloud using GitHub, Google, or email authentication. Once connected, your tasks automatically sync for access across devices and sessions.
+You can see the [pricing for different plans here](https://roocode.com/pricing).
 
-### [Dashboard](/roo-code-cloud/dashboard)
-Access your central control hub at [app.roocode.com](https://app.roocode.com/) to view task history, monitor usage analytics, and manage your workspace connections. The dashboard provides a unified view of all your Roo Code Cloud features.
+## Main Features
 
-### [Task Sharing](/roo-code-cloud/task-sharing)
-Share individual tasks with colleagues or the community through secure, expiring links. Control what you share and when, with links that automatically expire after 30 days for enhanced security.
+| Feature | Description | Availability |
+| :------ | :---------- | :----------- |
+| [Connect the Extension to Cloud](/roo-code-cloud/connect) | Connect via GitHub, Google, or email for cloud sync | Free |
+| [Analytics](/roo-code-cloud/analytics) | Track model tokens, tasks, estimated cost, and Cloud Agent credits | Free |
+| [Task Sync](/roo-code-cloud/task-sync) | Real-time task updates and cloud task history across devices | Free |
+| [Task Sharing](/roo-code-cloud/task-sharing) | Share tasks via secure, expiring links | Free |
+| [Roomote Control](/roo-code-cloud/roomote-control) | Browser-based task control while your IDE runs them | Paid |
+| [Cloud Agents](/roo-code-cloud/cloud-agents) | Run Roo in the cloud with credit-based runtime and BYO provider keys | Paid |
+| [Billing & Plans](/roo-code-cloud/billing-subscriptions) | Manage subscriptions, trials, and credit purchasing | Paid |
 
-### [Task Sync](/roo-code-cloud/task-sync)
-Monitor tasks from any device with real-time updates and cloud task history. Free for all users.
 
-### [Roomote Control](/roo-code-cloud/roomote-control)
-Remotely control tasks from your browser (Pro). Start/stop and interact with tasks. Advanced settings and most customizations remain in your IDE; the browser UI focuses on core actions. For monitoring only, see [Task Sync](/roo-code-cloud/task-sync).
-
-### [Billing & Pro Features](/roo-code-cloud/billing-subscriptions)
-Try Pro free for 14 days, then $20/month to unlock full Roomote Control capabilities, priority support, and enhanced features. Cancel anytime with no commitment.
 
 ## Getting Started
 
-1. [Connect your account](/roo-code-cloud/login) to link Roo Code with the cloud
-2. [Explore the dashboard](/roo-code-cloud/dashboard) to see your task history and analytics
-3. [Share a task](/roo-code-cloud/task-sharing) to collaborate with others
-4. Use [Task Sync](/roo-code-cloud/task-sync) to monitor tasks from any device; enable [Roomote Control](/roo-code-cloud/roomote-control) for remote control
-5. [Consider Pro](/roo-code-cloud/billing-subscriptions) if you need full remote control features
+1. [Connect your account](/roo-code-cloud/connect) to link Roo Code with the cloud.
+2. Open [app.roocode.com](https://app.roocode.com/) and confirm your tasks appear.
+3. Turn on [Task Sync](/roo-code-cloud/task-sync) so activity syncs to the cloud.
+4. [Share a task](/roo-code-cloud/task-sharing) when you're ready for feedback or handoff.
+5. Optional: enable [Roomote Control](/roo-code-cloud/roomote-control) (Pro/Team) for remote control, or start a [Cloud Agent](/roo-code-cloud/cloud-agents). Manage plans in [Billing & Plans](/roo-code-cloud/billing-subscriptions).

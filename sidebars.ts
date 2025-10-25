@@ -45,21 +45,21 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Roo Code Cloud',
+      collapsed: false,
       items: [
         'roo-code-cloud/what-is-roo-code-cloud',
-        'roo-code-cloud/login',
-        'roo-code-cloud/dashboard',
+        'roo-code-cloud/connect',
+        'roo-code-cloud/analytics',
         'roo-code-cloud/task-sharing',
         'roo-code-cloud/task-sync',
-        'roo-code-cloud/billing-subscriptions',
         'roo-code-cloud/roomote-control',
+        'roo-code-cloud/cloud-agents',
+        'roo-code-cloud/billing-subscriptions',
       ],
     },
     {
       type: 'category',
       label: 'Features',
-      collapsed: false,
-      collapsible: false,
       items: [
         'features/api-configuration-profiles',
         'features/auto-approving-actions',
@@ -218,6 +218,13 @@ const sidebars: SidebarsConfig = {
       label: 'Update Notes',
       items: [
         'update-notes/index',
+        {
+          type: 'category',
+          label: '3.29',
+          items: [
+            { type: 'doc', id: 'update-notes/v3.29.0', label: '3.29.0' },
+          ],
+        },
         {
           type: 'category',
           label: '3.28',
