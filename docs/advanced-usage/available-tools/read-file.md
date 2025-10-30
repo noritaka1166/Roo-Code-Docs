@@ -20,7 +20,7 @@ image: /img/social-share.jpg
 The `read_file` tool examines the contents of files in a project. It allows Roo to understand code, configuration files, documentation, and now images to provide better assistance.
 
 :::info Multi-File Support
-The `read_file` tool can read multiple files simultaneously when the `maxConcurrentFileReads` setting is greater than 1. This significantly improves efficiency for tasks requiring analysis of multiple related files.
+The `read_file` tool accepts multiple files via the `args` format. Concurrency and per‑request limits are configured in the UI; the backend tool doesn’t hard‑enforce a file count cap. Some models may use a simplified single‑file variant.
 
 **Note:** When reading files (even single files), the LLM will see a message encouraging multi-file reads: "Reading multiple files at once is more efficient for the LLM. If other files are relevant to your current task, please read them simultaneously."
 :::
@@ -43,7 +43,7 @@ While the single-file parameters (`path`, `start_line`, `end_line`) are still su
 
 ### Enhanced Format (Multi-File)
 
-When `maxConcurrentFileReads` is set to a value greater than 1 (found in Settings > Context > "Concurrent file reads limit"), the tool accepts an `args` parameter containing multiple file entries:
+The tool also accepts an `args` parameter containing multiple file entries. Concurrency is UI‑configured; the backend accepts multiple files regardless of that setting. Some models may use a simple single‑file tool.
 
 - `args` (required): Container for multiple file specifications
   - `file` (required): Individual file specification
@@ -72,22 +72,22 @@ This tool reads the content of a specified file and returns it with line numbers
 
 - Displays file content with line numbers for easy reference
 - Can read specific portions of files by specifying line ranges
-- Extracts readable text from PDF and DOCX files
-- **Image support**: Displays images in multiple formats (PNG, JPG, JPEG, GIF, WebP, SVG, BMP, ICO, TIFF)
+- Extracts readable text from PDF, DOCX, XLSX, and IPYNB files
+- **Image support**: Displays images in multiple formats (PNG, JPG, JPEG, GIF, WebP, SVG, BMP, ICO, TIFF/TIF, AVIF)
 - **Intelligent reading**: Token-budget aware reading that auto-truncates to fit remaining budget instead of failing
 - **Large file preview**: Returns a 100KB preview for very large files to enable quick inspection
 - **Graceful error recovery**: Recovers from stream errors and guides you to use line_range for targeted reads
 - Automatically truncates large text files when no line range is specified, showing the beginning of the file
-- Provides method summaries with line ranges for truncated large code files
+- Appends `list_code_definition_names` for a code structure overview when content is truncated by line limits
 - Efficiently streams only requested line ranges for better performance
 - Makes it easy to discuss specific parts of code with line numbering
-- **Multi-file support**: Read multiple files simultaneously with batch approval (when `maxConcurrentFileReads` > 1)
+- **Multi-file support**: Read multiple files simultaneously with batch approval
 
 ---
 
 ## Multi-File Capabilities
 
-When the `maxConcurrentFileReads` setting is greater than 1, the `read_file` tool gains enhanced capabilities:
+Multi-file reads are supported. Concurrency and per‑request limits are configured in Settings; the backend tool doesn’t hard‑enforce a file count cap and behavior may be constrained by model/tool selection:
 
 ### Configuration
 - **Location**: Settings > Context > "Concurrent file reads limit"
@@ -96,7 +96,7 @@ When the `maxConcurrentFileReads` setting is greater than 1, the `read_file` too
 - **Default**: 5
 
 ### Batch Processing
-- Read up to 100 files in a single request (configurable, default 5)
+- UI‑configurable limit up to 100 files per request (default 5). Backend doesn’t hard‑enforce a cap; actual behavior may be constrained by model/tool.
 - Parallel processing for improved performance
 - Batch approval interface for user consent
 
@@ -116,13 +116,14 @@ When the `maxConcurrentFileReads` setting is greater than 1, the `read_file` too
 
 ## Limitations
 
-- **Large files**: For extremely large files, the tool provides a preview and guides you to use line_range for targeted reading
-- For binary files (except PDF, DOCX, and supported image formats), may return content that isn't human-readable
-- **Multi-file mode**: Requires `maxConcurrentFileReads` > 1 in settings
-- **Image files**: Returns base64-encoded data URLs which may be large for high-resolution images
-  - Default max single image size: 20MB
+- **Large files**: For extremely large files, the tool may return a preview and will guide you to use `line_range` for targeted reading.
+- **Binary files**: Except for PDF, DOCX, XLSX, IPYNB, and supported image formats, content may not be human‑readable.
+- **UI/model constraints**: Concurrency limits and per‑request file counts are configured in the UI; the backend tool doesn’t hard‑enforce a cap.
+- **Image files**: Images are provided as base64 data URLs. High‑resolution images can be large.
+  - Default max single image size: 5MB
   - Default max total image size: 20MB
-- **Token budget**: Automatically truncates content to fit remaining token budget to prevent context overruns
+- **Unsupported binary formats**: Returns a `<binary_file format="ext">Binary file - content not displayed</binary_file>` placeholder.
+- **Token budget**: Content may be truncated to fit remaining token budget; notices indicate how to proceed.
 
 ---
 
@@ -138,8 +139,8 @@ When the `read_file` tool is invoked, it follows this process:
 4. **Content Processing**:
    - Adds line numbers to the content (e.g., "1 | const x = 13") where `1 |` is the line number.
    - For truncated files, adds truncation notice and method definitions
-   - For special formats (PDF, DOCX), extracts readable text
-   - For image formats, returns base64-encoded data URLs with MIME type
+   - For special formats (PDF, DOCX, XLSX, IPYNB), extracts readable text
+   - For image formats, the XML includes a `<notice>` with size; the actual image is attached to the tool result as a base64 data URL (no dimensions returned; MIME type is implied by the data URL)
 
 ---
 
@@ -148,9 +149,9 @@ When the `read_file` tool is invoked, it follows this process:
 The tool uses a clear decision hierarchy to determine how to read a file:
 
 1. **First Priority: Explicit Line Range**
-   - If either `start_line` or `end_line` is provided, the tool always performs a range read
-   - The implementation efficiently streams only the requested lines, making it suitable for processing large files
-   - This takes precedence over all other options
+   - Legacy single‑file format: both `start_line` and `end_line` must be provided for a range read; otherwise it reads normally.
+   - Multi‑file `args` format: specify one or more `line_range` entries per file.
+   - Range reads stream only the requested lines and bypass `maxReadFileLine`, taking precedence over other options.
 
 2. **Second Priority: Token Budget Management**
    - The tool respects the remaining token budget to prevent context overruns
@@ -160,15 +161,15 @@ The tool uses a clear decision hierarchy to determine how to read a file:
    - Recovers gracefully from stream errors and suggests alternative approaches
 
 3. **Third Priority: Automatic Truncation for Large Text Files**
-   - This applies only when **all** of the following conditions are met:
+   - Applies only when all of the following are true:
      - Neither `start_line` nor `end_line` is specified.
-     - The file is identified as a text-based file (not binary like PDF/DOCX).
-     - The file's total line count exceeds the `maxReadFileLine` setting (default: 500 lines).
+     - The file is identified as a text‑based file (not binary like PDF/DOCX/XLSX/IPYNB).
+     - The file’s total line count exceeds the `maxReadFileLine` setting (configurable; UI default may be 500; backend uses `-1`—no line limit—when unset).
    - When automatic truncation occurs:
-     - The tool reads only the *first* `maxReadFileLine` lines.
-     - It appends a notice indicating truncation (e.g., `[Showing only 500 of 1200 total lines...]`).
-     - For code files, it may also append a summary of source code definitions found within the truncated portion.
-   - **Special Case - Definitions Only Mode**: When `maxReadFileLine` is set to `0`, the tool returns only source code definitions without any file content.
+     - The tool reads only the first `maxReadFileLine` lines.
+     - It appends a notice like: `Showing only X of Y total lines. Use line_range if you need to read more lines.`
+     - For code files, it appends `list_code_definition_names` for a structure overview.
+   - **Special Case – Definitions‑Only Mode**: When `maxReadFileLine` is `0`, the tool returns only code definitions without file content (plus a notice).
 
 4. **Default Behavior: Read Entire File**
     - If neither an explicit range is given nor automatic truncation applies (e.g., the file is within the line limit, or it's a supported binary type), the tool reads the entire content.
@@ -246,7 +247,7 @@ When reading a large text file without specifying a line range, the tool automat
 ...
 500 | Log entry 500...
 
-[Showing only 500 of 1500 total lines. Use start_line and end_line to read specific ranges.]
+Showing only 500 of 1500 total lines. Use line_range to read specific sections.
 // Optional: Source code definitions summary might appear here for code files
 ```
 *(Output shows the beginning lines up to the `maxReadFileLine` limit, plus a truncation notice. Use line ranges for full access.)*
@@ -302,9 +303,21 @@ If the file is excluded by rules in a `.rooignore` file:
 <read_file>
 <path>.env</path>
 </read_file>
+```
+
+**Simulated Output (Error):**
+```xml
+<file>
+  <path>.env</path>
+  <error>Access denied by .rooignore rules</error>
+</file>
+```
+
+---
+
 ### Intelligent Reading with Token Budget Management
 
-When reading large files, the tool automatically manages token budgets to prevent context overruns:
+When reading large files, the tool automatically manages token budgets to prevent context overruns.
 
 **Scenario:** Reading a very large file without specifying a line range.
 
@@ -317,17 +330,20 @@ When reading large files, the tool automatically manages token budgets to preven
 
 **Simulated Output (for a file exceeding token budget):**
 ```
-[First 100KB of file content shown as preview...]
-
-[File exceeds remaining token budget. Showing 100KB preview. Use line_range to read specific sections.]
+Preview: Showing first …MB of …MB file. Use line_range to read specific sections.
 ```
 
-This intelligent behavior ensures that:
+Alternative truncation notice:
+```
+File truncated to N of M characters due to context limitations. Use line_range to read specific sections.
+```
+
+This behavior ensures that:
 - Small files read completely with zero overhead
-- Large files auto-truncate to fit remaining token budget
+- Large files auto‑truncate to fit remaining token budget
 - Very large files provide a quick preview
 - You receive guidance to use `line_range` for targeted reads
-- Stream errors are recovered gracefully
+- Stream errors are handled gracefully
 
 **Example with line_range for targeted reading:**
 ```xml
@@ -337,20 +353,6 @@ This intelligent behavior ensures that:
 <end_line>1100</end_line>
 </read_file>
 ```
-
----
-
-```
-
-**Simulated Output (Error):**
-```xml
-<file>
-  <path>.env</path>
-  <error>Access denied by .rooignore rules</error>
-</file>
-```
-
----
 
 ## Image Reading Examples
 
@@ -367,15 +369,13 @@ The `read_file` tool now supports reading and displaying images directly in the 
 
 **Output:**
 ```xml
-<image_content>
-<path>assets/logo.png</path>
-<mime_type>image/png</mime_type>
-<dimensions>width: 512, height: 512</dimensions>
-<data_url>data:image/png;base64,iVBORw0KGgoAAAANS...</data_url>
-</image_content>
+<file>
+  <path>assets/logo.png</path>
+  <notice>Image file (123 KB)</notice>
+</file>
 ```
 
-The image will be displayed directly in the chat interface, allowing Roo to analyze visual content.
+The image is displayed inline in the chat (base64 data URL attached to the tool result). No dimensions are returned; MIME type is implied by the data URL.
 
 ### OCR Workflow Example
 
@@ -436,14 +436,15 @@ Compare these design mockups and provide feedback on:
 ### Supported Image Formats
 
 The tool supports the following image formats:
-- **PNG** - With dimension extraction
-- **JPG/JPEG** - Standard and progressive
-- **GIF** - Static and animated
-- **WebP** - Modern web format
-- **SVG** - Scalable vector graphics
-- **BMP** - Bitmap images
-- **ICO** - Icon files
-- **TIFF** - Tagged image format
+- PNG
+- JPG/JPEG
+- GIF
+- WebP
+- SVG
+- BMP
+- ICO
+- TIFF/TIF
+- AVIF
 
 ### Image Analysis Use Cases
 
@@ -458,7 +459,7 @@ The tool supports the following image formats:
 
 ## Multi-File Examples
 
-When `maxConcurrentFileReads` is set to a value greater than 1, you can read multiple files simultaneously using the enhanced XML format.
+You can read multiple files simultaneously using the enhanced XML format.
 
 ### Reading Multiple Complete Files
 
@@ -640,4 +641,23 @@ You can read different types of files in a single request:
 ```
 
 This allows Roo to analyze documentation, visual diagrams, configuration, and specifications all in one context.
+
+---
+
+## Troubleshooting
+
+- Range read returns error
+  - Cause: `start_line`/`end_line` invalid or `start_line > end_line`
+  - Fix: Provide both `start_line` and `end_line` as positive integers with `start_line ≤ end_line`; or use `args` with one or more `line_range` entries.
+  - Prevention: Prefer `line_range` in the multi‑file format for targeted reads.
+
+- Large file returned a preview
+  - Cause: File exceeded token budget or the large‑file tokenization threshold; a preview was returned.
+  - Fix: Use `line_range` to request only the section you need; reduce requested ranges.
+  - Prevention: Adjust `maxReadFileLine` in Settings, or prefer targeted ranges on large files.
+
+- Image not displayed
+  - Cause: Model may not support images, or image limits exceeded (5MB per image; 20MB total per request).
+  - Fix: Switch to a vision‑capable model; reduce image size; request fewer/smaller images.
+  - Prevention: Keep images within limits and use supported formats (PNG, JPG/JPEG, GIF, WebP, SVG, BMP, ICO, TIFF/TIF, AVIF).
 
