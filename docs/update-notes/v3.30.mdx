@@ -25,7 +25,6 @@ OpenRouter currently supports 7 embedding models, including the top‑ranking Qw
 
 * Terminal settings cleanup with Inline as the default terminal and clearer options; shell integration default is disabled to reduce environment conflicts ([#8342](https://github.com/RooCodeInc/Roo-Code/pull/8342))
 * File path tooltips show full paths on hover across reads/edits, directory listings, and search, reducing confusion in narrow layouts (thanks da2ce7!) ([#9030](https://github.com/RooCodeInc/Roo-Code/pull/9030))
-* Optional pre-push full test run via RUN_TESTS_ON_PUSH=true in .env.local; default behavior keeps pushes fast (tests skipped) ([#9055](https://github.com/RooCodeInc/Roo-Code/pull/9055))
 
 ## Bug Fixes
 
@@ -46,6 +45,7 @@ OpenRouter currently supports 7 embedding models, including the top‑ranking Qw
 ## Misc Improvements
 
 * Add preserveReasoning flag to optionally include reasoning in API history so later turns can leverage prior reasoning; off by default and model‑gated ([#8934](https://github.com/RooCodeInc/Roo-Code/pull/8934))
+* Optional pre-push full test run via RUN_TESTS_ON_PUSH=true in .env.local; default behavior keeps pushes fast (tests skipped) ([#9055](https://github.com/RooCodeInc/Roo-Code/pull/9055))
 
 ## Provider Updates
 
