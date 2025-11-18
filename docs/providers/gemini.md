@@ -33,54 +33,38 @@ Roo Code supports Google's Gemini family of models through the Google AI Gemini 
 
 ## Supported Models
 
-Roo Code supports the following Gemini models:
+Roo Code supports the main Gemini model families and automatically tracks Google's latest stable releases.
 
-### Model Aliases (Recommended)
+### Recommended Defaults
 
-For stability and automatic updates, use these aliases that point to the latest stable versions:
+- **Gemini 3 Pro Preview**
+  - 1M-token context window for very large workspaces and long-running conversations
+  - Reasoning-capable behavior for multi-step coding and refactoring tasks
+  - Tiered pricing support in Roo Code (≤200K vs >200K tokens) to better match Google's published pricing
+- **Gemini Pro family**
+  - Stable Pro models for complex coding, debugging, and analysis
+  - Roo Code defaults to a stable Pro model where your provider supports it (today this is a Gemini 2.5 Pro variant; future releases may point at newer Pro models)
+- **Gemini Flash family**
+  - Fast, lower-cost models for everyday tasks and quick iterations
 
-* `gemini-flash-latest` - Always uses the newest stable Flash model
-* `gemini-pro-latest` - Always uses the newest stable Pro model
+### Aliases
 
+For stability and automatic updates, prefer these aliases instead of hard-coding specific versioned model IDs:
 
-### Standard Models
-* `gemini-2.5-flash-preview-05-20`
-* `gemini-2.5-flash-preview-04-17`
-* `gemini-2.5-flash-lite-preview-06-17`
-* `gemini-2.5-pro-exp-03-25`
-* `gemini-2.0-flash-001`
-* `gemini-2.0-flash-lite-preview-02-05`
-* `gemini-2.0-pro-exp-02-05`
-* `gemini-2.0-flash-exp`
-* `gemini-1.5-flash-002`
-* `gemini-1.5-flash-exp-0827`
-* `gemini-1.5-flash-8b-exp-0827`
-* `gemini-1.5-pro-002`
-* `gemini-1.5-pro-exp-0827`
-* `gemini-exp-1206`
+- `gemini-flash-latest` – Points to the newest stable Flash model
+- `gemini-pro-latest` – Points to the newest stable Pro model
 
-### Preview Models
+Using aliases helps Roo Code follow Google's recommended stable releases without you having to update model IDs manually.
 
-Preview models include Google's latest experimental features but may change without notice:
+### Thinking / Reasoning Models
 
-* Models with `-preview-` in the name (e.g., `gemini-2.5-flash-preview-05-20`)
-* Models with `-exp-` suffix (e.g., `gemini-2.0-flash-exp`)
-* Models prefixed with `gemini-exp-` (e.g., `gemini-exp-1206`)
+Some Gemini models are reasoning-capable and may expose separate "thinking" or reasoning tokens:
 
-Preview models are ideal for testing cutting-edge capabilities but may have breaking changes. Use stable aliases for production work.
+- Roo Code treats these as reasoning models and can use them for deeper, multi-step planning.
+- To use reasoning models effectively, enable the **reasoning budget** feature in Roo Code settings.
+- When the Gemini API reports reasoning / "thought" token usage, Roo Code includes those tokens in its cost estimates so reported costs stay closer to your provider's billing.
 
-### Thinking Models
-These models require reasoning budget to be enabled in Roo Code settings:
-* `gemini-2.5-flash-preview-05-20:thinking`
-* `gemini-2.5-flash-preview-04-17:thinking`
-* `gemini-2.0-flash-thinking-exp-01-21`
-* `gemini-2.0-flash-thinking-exp-1219`
-
-:::info
-**Thinking Models:** Models with `:thinking` suffix or "thinking" in their name are hybrid reasoning models that provide step-by-step reasoning capabilities. To use these models, you must enable the reasoning budget feature in Roo Code settings.
-:::
-
-Refer to the [Gemini documentation](https://ai.google.dev/models/gemini) for more details on each model.
+Refer to the [Gemini documentation](https://ai.google.dev/models/gemini) for more details on each model family and its capabilities.
 
 ---
 
@@ -90,6 +74,8 @@ Refer to the [Gemini documentation](https://ai.google.dev/models/gemini) for mor
 2.  **Select Provider:** Choose "Google Gemini" from the "API Provider" dropdown.
 3.  **Enter API Key:** Paste your Gemini API key into the "Gemini API Key" field.
 4.  **Select Model:** Choose your desired Gemini model from the "Model" dropdown.
+
+By default, Roo Code selects a stable Pro model (currently a Gemini 2.5 Pro variant) with a temperature of **1.0** where your provider supports it. This keeps suggestions more expressive and natural while still staying on task. If you need highly deterministic output (for example, for code generation in CI), you can lower the temperature toward `0.0`.
 
 ---
 

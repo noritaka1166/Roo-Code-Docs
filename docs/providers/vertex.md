@@ -43,31 +43,29 @@ If no model is specified, Roo Code defaults to `claude-sonnet-4@20250514`.
 
 ### Google Gemini Models
 
-#### Standard Models
-*   `gemini-2.5-flash` - Production version with prompt caching support
-*   `gemini-2.5-flash-preview-05-20` - Preview with 1M context window
-*   `gemini-2.5-flash-preview-04-17` - Preview without caching
-*   `gemini-2.5-flash-lite-preview-06-17` - Lite version with lower pricing
-*   `gemini-2.5-pro` - Production version with reasoning support
-*   `gemini-2.5-pro-preview-03-25` - Pro preview version
-*   `gemini-2.5-pro-preview-05-06` - Pro preview version
-*   `gemini-2.5-pro-preview-06-05` - Pro preview with reasoning support
-*   `gemini-2.5-pro-exp-03-25` - Experimental version (free)
-*   `gemini-2.0-flash-001` - 2.0 Flash model
-*   `gemini-2.0-flash-lite-001` - 2.0 Flash lite version
-*   `gemini-2.0-flash-thinking-exp-01-21` - Thinking/reasoning model
-*   `gemini-2.0-pro-exp-02-05` - 2.0 Pro experimental
-*   `gemini-1.5-flash-002` - 1.5 Flash model
-*   `gemini-1.5-pro-002` - 1.5 Pro model
+Vertex AI exposes multiple Gemini model families. Roo Code focuses on the main families and tracks Google's stable releases instead of requiring you to hard-code versioned model IDs.
 
-#### Thinking/Reasoning Models
-These models support enhanced reasoning capabilities with the `:thinking` suffix:
-*   `gemini-2.5-flash-preview-05-20:thinking`
-*   `gemini-2.5-flash-preview-04-17:thinking`
+#### Recommended Gemini options
 
-:::info
-**Thinking Models:** Models with `:thinking` suffix enable step-by-step reasoning. The suffix is stripped before sending to the API but enables reasoning features in Roo Code. You'll need to enable the reasoning budget in settings to use these models effectively.
-:::
+- **Gemini 3 Pro Preview**
+  - Up to a 1M-token context window for very large workspaces and long-running conversations
+  - Reasoning-capable behavior for complex coding and refactoring tasks
+  - Roo Code's cost estimation supports tiered pricing (short vs long requests) to better match Vertex AI billing for this model
+- **Gemini Pro family**
+  - Stable Pro models for complex reasoning and analysis
+  - When you select a Gemini model without overriding it in a profile, Roo Code prefers a stable Pro variant by default where available
+- **Gemini Flash family**
+  - Faster, lower-cost models ideal for quick iterations and non-critical tasks
+
+#### Reasoning / thinking models
+
+Some Gemini models provide dedicated reasoning or "thinking" tokens:
+
+- Roo Code treats these as reasoning models and uses them for deeper multi-step planning when enabled.
+- The reasoning budget must be enabled in Roo Code settings to take full advantage of these models.
+- When Vertex AI reports separate reasoning or "thought" tokens, Roo Code includes them in token usage and cost estimates. Compared to older versions, you may see slightly higher but more accurate token counts.
+
+Refer to the [Google Cloud Vertex AI models documentation](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models) for up-to-date Gemini model IDs and capabilities.
 
 ### Anthropic Claude Models
 *   `claude-opus-4-1@20250805`
