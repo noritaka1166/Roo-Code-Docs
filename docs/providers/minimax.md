@@ -22,7 +22,7 @@ MiniMax is an OpenAI‑compatible provider. Pick the correct region endpoint, ad
 2. Select Provider: “MiniMax”.
 3. Choose Base URL (region):
    - International: https://api.minimax.io/v1
-   - China (Mainland): https://api.minimax.com/v1
+   - China (Mainland): https://api.minimaxi.com/v1
 4. Enter your API key in “MiniMax API Key”.
 5. Select a model from the dropdown.
 6. Optional: adjust Temperature and Max Output Tokens in model settings.
