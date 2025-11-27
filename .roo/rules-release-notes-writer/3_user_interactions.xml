@@ -193,28 +193,28 @@ Which would you like to process?</question>
   <discord_format_interaction>
     <trigger>Discord release notes for X.Y.Z</trigger>
     <behavior>
-      <rule>Immediately generate Discord and Reddit posts using social_formatting rules (no prompt).</rule>
-      <rule>Only ask if the user requests "compress"/"condense", or if content exceeds 2000 chars.</rule>
+      <rule>Immediately generate Discord and Reddit posts (no prompt).</rule>
+      <rule>Preserve original section headings and structure from source docs exactly.</rule>
+      <rule>Only ask if the user requests "compress"/"condense".</rule>
     </behavior>
     <formatting_checklist>
-      <item>Title uses ":rocket:" and "Release Updates" (single or X.Y.Z-X.Y.Z for combined)</item>
-      <item>Include "@everyone" tagline line with short hero summary under the title</item>
-      <item>Section order: Fixed: GPT-5-Codex errors and others!, Context condensing fix, More free models on Roo Code Cloud, More Changes</item>
+      <item>Title: "# Roo Code X.Y.Z Release Updates" (no emoji)</item>
+      <item>Include "@everyone" tagline derived from source intro sentence</item>
+      <item>Preserve section headings EXACTLY as they appear in source docs</item>
+      <item>Preserve section order EXACTLY as in source docs</item>
+      <item>Copy all bullet points exactly as they appear (only change * to -)</item>
       <item>Use hyphen bullets "- " only; no emojis in section headers</item>
-      <item>Hero sentence for GPT-5-Codex copied EXACTLY from docs (preserve PR link); other sections remove PR links</item>
-      <item>Footer blurb: See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (single) or [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) | [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (combined)</item>
+      <item>Remove all PR links from content</item>
+      <item>Remove inline hero images</item>
+      <item>Footer: See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z)</item>
       <item>Wrap entire output in ```markdown code block</item>
     </formatting_checklist>
     <compression_workflow>
-      <trigger>User says "compress", "condense", or content exceeds 2000 chars</trigger>
+      <trigger>User explicitly says "compress" or "condense"</trigger>
       <steps>
-        <step>Preserve the "Fixed: GPT-5-Codex..." section intact</step>
-        <step>Summarize remaining content into a single "More Changes" paragraph with total count and contributor thanks</step>
+        <step>Preserve major feature section headings</step>
+        <step>Summarize smaller sections into a "More Changes" paragraph</step>
       </steps>
-      <validation>
-        <item>Verify actual count of changes</item>
-        <item>Maintain markdown code block and hyphen bullets</item>
-      </validation>
       <template>
 <ask_followup_question>
 <question>The Discord post is long. Compress remaining sections into a single "More Changes" paragraph?</question>
@@ -230,16 +230,20 @@ Which would you like to process?</question>
   <reddit_format_interaction>
     <trigger>Reddit release notes for X.Y.Z</trigger>
     <behavior>
-      <rule>Immediately generate Reddit and Discord posts using social_formatting rules (no prompt).</rule>
+      <rule>Immediately generate Reddit and Discord posts (no prompt).</rule>
+      <rule>Preserve original section headings and structure from source docs exactly.</rule>
     </behavior>
     <formatting_checklist>
-      <item>Title (plain text): "Roo Code X.Y.Z-X.Y.Z Release Updates | FREE models | GPT‑5‑Codex tool‑usage fix | More fixes!"</item>
+      <item>Title (plain text): "Roo Code X.Y.Z Release Updates | [key feature 1] | [key feature 2]" (derived from source)</item>
       <item>Intro italic note present</item>
-      <item>Section order: More free models on Roo Code Cloud, Fixed: GPT-5-Codex errors and others!, Context condensing fix, More Changes</item>
+      <item>Preserve section headings EXACTLY as they appear in source docs</item>
+      <item>Preserve section order EXACTLY as in source docs</item>
+      <item>Copy all bullet points exactly as they appear (only change * to -)</item>
       <item>Use hyphen bullets "- " only; no emojis, no @everyone</item>
+      <item>Remove all PR links everywhere</item>
+      <item>Remove inline hero images</item>
+      <item>Footer: See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z)</item>
       <item>Wrap entire output in ```markdown code block</item>
-      <item>Remove PR links everywhere</item>
-      <item>Footer blurb: See full release notes [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (single) or [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) | [vX.Y.Z](https://docs.roocode.com/update-notes/vX.Y.Z) (combined)</item>
     </formatting_checklist>
   </reddit_format_interaction>
 
@@ -248,27 +252,33 @@ Which would you like to process?</question>
     <workflow>
       <step>Identify all versions to combine</step>
       <step>Read release notes for each version</step>
-      <step>Merge and format according to Discord rules</step>
+      <step>Preserve all section headings exactly as they appear in source docs</step>
+      <step>Merge content from multiple versions under their original headings</step>
       <step>Present formatted output in markdown code block</step>
     </workflow>
     <formatting_checklist>
-      <item>Title uses ":rocket:" and version range (X.Y.Z-X.Y.Z) with "Release Updates"</item>
-      <item>Include "@everyone" tagline line with short hero summary</item>
-      <item>Section order: Fixed: GPT-5-Codex errors and others!, Context condensing fix, More free models on Roo Code Cloud, More Changes</item>
+      <item>Title: "# Roo Code X.Y.Z-X.Y.Z Release Updates" (no emoji, version range)</item>
+      <item>Include "@everyone" tagline derived from source intro sentences</item>
+      <item>Preserve all section headings EXACTLY as they appear in source docs</item>
+      <item>Merge content from same-named sections across versions</item>
       <item>Use hyphen bullets "- " only; no emojis in section headers</item>
-      <item>Hero sentence copied EXACTLY with PR link preserved</item>
-      <item>Footer links as hyphen bullets to each version's docs page</item>
+      <item>Remove all PR links from content</item>
+      <item>Remove inline hero images</item>
+      <item>Footer: See full release notes [vX.Y.Z](link) | [vX.Y.Z](link)</item>
       <item>Wrap entire output in ```markdown code block</item>
     </formatting_checklist>
-    <template>
+    <compression_workflow>
+      <trigger>User explicitly says "compress" or "condense"</trigger>
+      <template>
 <ask_followup_question>
-<question>If the combined post is long, should I compress minor sections into a single "More Changes" paragraph?</question>
+<question>The combined post is long. Compress smaller sections into a single "More Changes" paragraph?</question>
 <follow_up>
-<suggest>Yes, compress if needed</suggest>
+<suggest>Yes, compress smaller sections</suggest>
 <suggest>No, keep full details</suggest>
 </follow_up>
 </ask_followup_question>
-    </template>
+      </template>
+    </compression_workflow>
   </discord_combined_interaction>
 
   <best_practices>
