@@ -224,20 +224,24 @@ mkdir -p .roo/tmp/release-notes
 gh release view vX.Y.Z --repo RooCodeInc/Roo-Code --json body --jq '.body' > .roo/tmp/release-notes/changelog_vX.Y.Z.md
           ]]></save_body_to_file>
           <fetch_changelog><![CDATA[
-# Fetch CHANGELOG.md at tag vX.Y.Z; fallback to main, then extract vX.Y.Z section
+# Fetch CHANGELOG.md from main branch FIRST for hero image discovery.
+# Hero images are often added retroactively after release, so the current main
+# branch has the most up-to-date images. Only fall back to the release tag if main fails.
 TMP_DIR=".roo/tmp/release-notes"
 CHANGELOG_TAG_FILE="$TMP_DIR/CHANGELOG_vX.Y.Z.md"
 SECTION_FILE="$TMP_DIR/CHANGELOG_section_vX.Y.Z.md"
-# Try tag first
-if gh api "repos/RooCodeInc/Roo-Code/contents/CHANGELOG.md?ref=vX.Y.Z" --jq '.content' >/tmp/chlog64.txt 2>/dev/null; then
+# Try main first (has retroactively-added hero images)
+if gh api "repos/RooCodeInc/Roo-Code/contents/CHANGELOG.md" --jq '.content' >/tmp/chlog64.txt 2>/dev/null; then
   base64 -D </tmp/chlog64.txt > "$CHANGELOG_TAG_FILE" || true
-# Fallback to main
-elif gh api "repos/RooCodeInc/Roo-Code/contents/CHANGELOG.md" --jq '.content' >/tmp/chlog64.txt 2>/dev/null; then
+# Fallback to tag if main fails
+elif gh api "repos/RooCodeInc/Roo-Code/contents/CHANGELOG.md?ref=vX.Y.Z" --jq '.content' >/tmp/chlog64.txt 2>/dev/null; then
   base64 -D </tmp/chlog64.txt > "$CHANGELOG_TAG_FILE" || true
 else
   : > "$CHANGELOG_TAG_FILE"
 fi
 # Extract the vX.Y.Z section if present
+# CRITICAL: If the version header is not found, create an EMPTY section file.
+# Do NOT fall back to the entire changelog—that would pull images from other versions.
 if [ -s "$CHANGELOG_TAG_FILE" ]; then
   START_LINE=$(grep -nE '^[#]{2,3}[[:space:]]*\[?v?X\.Y\.Z\]?' "$CHANGELOG_TAG_FILE" | head -n1 | cut -d: -f1 || true)
   if [ -n "${START_LINE:-}" ]; then
@@ -249,32 +253,28 @@ if [ -s "$CHANGELOG_TAG_FILE" ]; then
       tail -n +"$START_LINE" "$CHANGELOG_TAG_FILE" > "$SECTION_FILE"
     fi
   else
-    cp "$CHANGELOG_TAG_FILE" "$SECTION_FILE"
+    # Version header not found—create empty section to avoid pulling images from other versions
+    : > "$SECTION_FILE"
   fi
 else
   : > "$SECTION_FILE"
 fi
           ]]></fetch_changelog>
           <extract_candidates><![CDATA[
-# Build candidate list from both the release body and extracted changelog section (absolute and relative paths)
+# Build candidate list ONLY from the extracted changelog section for the target version.
+# Do NOT extract from the full release body—it often contains the entire changelog,
+# which would pull images from unrelated versions.
 CANDIDATES_FILE=".roo/tmp/release-notes/image_candidates_vX.Y.Z.txt"
+SECTION_FILE=".roo/tmp/release-notes/CHANGELOG_section_vX.Y.Z.md"
 : > "$CANDIDATES_FILE"
 
-# From release body markdown images (absolute or relative)
-grep -Eo '!\[[^]]*\]\(([^)]+)\)' .roo/tmp/release-notes/changelog_vX.Y.Z.md 2>/dev/null \
-  | sed -E 's/.*\(([^)]+)\).*/\1/' | grep -Ei '\.(png|jpe?g|gif|webp)' >> "$CANDIDATES_FILE" || true
-
-# From release body bare URLs (absolute or relative)
-grep -Eo 'https?://[^ )]+' .roo/tmp/release-notes/changelog_vX.Y.Z.md 2>/dev/null | grep -Ei '\.(png|jpe?g|gif|webp)' >> "$CANDIDATES_FILE" || true
-grep -Eo '(/[^ )]+|[A-Za-z0-9_./-]+)\.(png|jpe?g|gif|webp)' .roo/tmp/release-notes/changelog_vX.Y.Z.md 2>/dev/null >> "$CANDIDATES_FILE" || true
-
 # From CHANGELOG section markdown images (absolute or relative)
-grep -Eo '!\[[^]]*\]\(([^)]+)\)' .roo/tmp/release-notes/CHANGELOG_section_vX.Y.Z.md 2>/dev/null \
+grep -Eo '!\[[^]]*\]\(([^)]+)\)' "$SECTION_FILE" 2>/dev/null \
   | sed -E 's/.*\(([^)]+)\).*/\1/' | grep -Ei '\.(png|jpe?g|gif|webp)' >> "$CANDIDATES_FILE" || true
 
 # From CHANGELOG section bare URLs (absolute or relative)
-grep -Eo 'https?://[^ )]+' .roo/tmp/release-notes/CHANGELOG_section_vX.Y.Z.md 2>/dev/null | grep -Ei '\.(png|jpe?g|gif|webp)' >> "$CANDIDATES_FILE" || true
-grep -Eo '(/[^ )]+|[A-Za-z0-9_./-]+)\.(png|jpe?g|gif|webp)' .roo/tmp/release-notes/CHANGELOG_section_vX.Y.Z.md 2>/dev/null >> "$CANDIDATES_FILE" || true
+grep -Eo 'https?://[^ )]+' "$SECTION_FILE" 2>/dev/null | grep -Ei '\.(png|jpe?g|gif|webp)' >> "$CANDIDATES_FILE" || true
+grep -Eo '(/[^ )]+|[A-Za-z0-9_./-]+)\.(png|jpe?g|gif|webp)' "$SECTION_FILE" 2>/dev/null >> "$CANDIDATES_FILE" || true
 
 # Deduplicate
 if [ -s "$CANDIDATES_FILE" ]; then
@@ -289,22 +289,44 @@ fi
       </step>
 
       <step number="1b">
-        <action>Download hero image via curl to static/img/v[VERSION]/v[VERSION].png and persist frontmatter image path</action>
+        <action>Resolve hero image from discovered candidates, falling back to social-share when none exist</action>
         <command><![CDATA[
 VERSION="X.Y.Z"
+CANDIDATES_FILE=".roo/tmp/release-notes/image_candidates_v$VERSION.txt"
+FRONTMATTER_FILE=".roo/tmp/release-notes/frontmatter_image_v$VERSION.txt"
+
+# If no candidates were discovered, skip download entirely and use social-share
+if [ ! -s "$CANDIDATES_FILE" ]; then
+  mkdir -p "$(dirname "$FRONTMATTER_FILE")"
+  echo "/img/social-share.jpg" > "$FRONTMATTER_FILE"
+  exit 0
+fi
+
+# Try the first candidate URL/path as the hero image source
 mkdir -p "static/img/v$VERSION"
 OUT="static/img/v$VERSION/v$VERSION.png"
-RAW_URL="https://raw.githubusercontent.com/RooCodeInc/Roo-Code/main/releases/$VERSION-release.png"
-curl -L "$RAW_URL" -o "$OUT" || true
-if [ -s "$OUT" ]; then
-  echo "/img/v$VERSION/v$VERSION.png" > ".roo/tmp/release-notes/frontmatter_image_v$VERSION.txt"
+SRC="$(head -n1 "$CANDIDATES_FILE")"
+
+# If SRC is a relative docs path, prefix it with the raw GitHub base for Roo-Code
+if echo "$SRC" | grep -qE '^(https?://)'; then
+  URL="$SRC"
 else
-  echo "/img/social-share.jpg" > ".roo/tmp/release-notes/frontmatter_image_v$VERSION.txt"
+  # Treat as repository-relative path; adjust as needed if release assets move
+  URL="https://raw.githubusercontent.com/RooCodeInc/Roo-Code/main/$SRC"
+fi
+
+curl -L "$URL" -o "$OUT" || true
+if [ -s "$OUT" ]; then
+  echo "/img/v$VERSION/v$VERSION.png" > "$FRONTMATTER_FILE"
+else
+  echo "/img/social-share.jpg" > "$FRONTMATTER_FILE"
 fi
         ]]></command>
         <notes>
-          - If curl fails or the URL is invalid, the persisted path will be /img/social-share.jpg
-          - Prefer PNG when multiple candidates are present
+          - Skip hero image download entirely when no candidates were discovered; default to /img/social-share.jpg
+          - When candidates exist, attempt to download the first one and persist it as /img/v$VERSION/v$VERSION.png
+          - If download fails or the file is empty, fall back to /img/social-share.jpg
+          - Prefer PNG when multiple candidates are present (candidates list should already be filtered/ordered)
         </notes>
       </step>
 
@@ -670,6 +692,10 @@ gh pr list --repo RooCodeInc/Roo-Code --state merged --base main --limit 1000 \
     </rule>
     <rule priority="CRITICAL">
       For each PR, the parent MUST create a subtask via new_task. The parent MUST NOT write PR analysis entries; only subtasks may append to .roo/tmp/release-notes/temp_pr_analysis_v[version].md. Do not proceed to changelog_alignment or compilation until all PR subtasks complete.
+      Even when the parent already has the PR number, title, description, or a user‑provided
+      summary list, it MUST still create and wait on the per‑PR subtask. These summaries are
+      insufficient for functional understanding of the change, discovery of linked issues, and
+      correct contributor attribution (PR authors and issue reporters).
     </rule>
     <rule priority="CRITICAL">
       Use the simplified PR extraction command for consistent results
