@@ -6,7 +6,7 @@
 
 /* Light mode color system */
 :root {
-  --background: 0 0% 100%;
+  --background: 0 0% 97%;
   --foreground: 0 0% 3.9%;
   --card: 0 0% 100%;
   --card-foreground: 0 0% 3.9%;
@@ -18,10 +18,10 @@
   --secondary-foreground: 0 0% 9%;
   --muted: 0 0% 96.1%;
   --muted-foreground: 0 0% 45.1%;
-  --accent: 0 0% 96.1%;
+  --accent: 139, 92, 246;
   --accent-foreground: 0 0% 9%;
   --ring: 0 0% 3.9%;
-  --destructive: 0 84.2% 60.2%;
+  --destructive: 354, 76%, 48%; 
   --destructive-foreground: 0 0% 98%;
   --border: 0 0% 89.8%;
   --input: 0 0% 89.8%;
@@ -34,13 +34,33 @@
   --chart-4: 83 100% 50%;
   --chart-5: 115 100% 50%;
 
+  /* Typography*/
+
+  --list-inset: 24px;
+  --block-spacing-small: 8px;
+  --block-spacing: 2rem;
+  --text-regular-size: 14px;
+  --header-line-height: 1.25em;
+  --header-letter-spacing: -0.02em;
+  --header-bottom-margin: 1rem;
+  --header-bottom-spacing: 0.75em;
+  --header-top-spacing: 1.75em;
+  --h1-size: 2.25rem;
+  --h2-size: 1.65rem;
+  --h3-size: 1.4rem;
+  --h4-size: 1.25rem;
+  --figure-margin: 20px;
+  --p-size: var(--text-regular-size);
+  --p-line-height: var(--text-regular-line-height);
+  --p-letter-spacing: var(--text-regular-letter-spacing);
+
   /* GitHub install button colors */
   --primary-hover: 0 0% 9% / 0.9;
   --ifm-color-gray-400: #9ca3af;
   --ifm-color-gray-200: #e5e7eb;
 
   /* Docusaurus variables for light theme */
-  --ifm-color-primary: #60a5fa; /* Blue like roocode.com */
+  --ifm-color-primary: #60a5fa;
   --ifm-color-primary-dark: #3b82f6;
   --ifm-color-primary-darker: #2563eb;
   --ifm-color-primary-darkest: #1d4ed8;
@@ -52,6 +72,7 @@
   --ifm-background-color: hsl(var(--background));
   --ifm-font-color-base: hsl(var(--foreground));
 
+  --block-shadow: 0 4px 10px rgba(0,0,0,0.075);
   font-size: 14px;
 }
 
@@ -59,7 +80,7 @@
 [data-theme='dark'] {
   --background: 0 0% 0%;
   --foreground: 0 0% 98%;
-  --card: 0 0% 4%;
+  --card: 0 0% 10%;
   --card-foreground: 0 0% 98%;
   --popover: 0 0% 4%;
   --popover-foreground: 0 0% 98%;
@@ -69,12 +90,12 @@
   --secondary-foreground: 0 0% 98%;
   --muted: 0 0% 8%;
   --muted-foreground: 0 0% 70%; /* Brighter for better readability */
-  --accent: 0 0% 14.9%;
+  --accent: 139, 92, 246;
   --accent-foreground: 0 0% 98%;
   --ring: 0 0% 83.1%;
-  --destructive: 0 62.8% 30.6%;
+  --destructive: 354, 76%, 48%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
+  --border: 0 0% 15%;
   --input: 0 0% 14.9%;
   --ring: 0 0% 83.1%;
   
@@ -98,12 +119,11 @@
 /* Force black background in dark mode */
 [data-theme='dark'] html,
 [data-theme='dark'] body {
-  background-color: #000000 !important;
+  background-color: hsl(var(--background)) !important;
 }
 
 /* Ensure main content area is also black */
 .main-wrapper {
-  background-color: #000000 !important;
   position: relative;
   z-index: 1;
 }
@@ -308,6 +328,10 @@ div[style*="min-height:100vh"] {
   backdrop-filter: blur(16px);
 }
 
+.video-container img {
+  margin: 0 !important;
+}
+
 .video-container iframe {
   position: absolute;
   top: 0;
@@ -325,9 +349,9 @@ div[style*="min-height:100vh"] {
 .video-title {
   font-weight: 500;
   color: var(--ifm-heading-color);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  display: box;
+  line-clamp: 2;
+  box-orient: vertical;
   overflow: hidden;
   line-height: 1.4;
   max-height: 2.8em; /* 2 lines * 1.4 line-height */
@@ -352,7 +376,7 @@ pre {
 
 /* Enhanced container system */
 :root {
-  --ifm-container-width: 1400px; /* Increased from 1200px for wider content */
+  --ifm-container-width: 1400px;
 }
 
 /* Exact navbar styling from roocode.com */
@@ -362,10 +386,11 @@ pre {
   z-index: 50 !important;
   height: 64px !important; /* 4rem */
   border-bottom: 1px solid hsl(var(--border)) !important;
-  background-color: hsl(var(--background) / 0.8) !important; /* 80% opacity like roocode.com */
+  background-color: hsl(var(--background)) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   padding: 0 !important;
+  box-shadow: none;
 }
 
 /* Remove backdrop-filter on mobile to fix menu stacking context issues */
@@ -379,11 +404,7 @@ pre {
   .navbar-sidebar {
     background-color: hsl(var(--background)) !important;
   }
-  
-  .navbar-sidebar__backdrop {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-  }
-  
+    
   .navbar-sidebar__brand,
   .navbar-sidebar__items {
     background-color: hsl(var(--background)) !important;
@@ -421,12 +442,6 @@ pre {
   background-color: transparent !important;
 }
 
-/* Ensure proper dark mode border color */
-[data-theme='dark'] .navbar {
-  border-bottom-color: hsl(0 0% 14.9%) !important;
-  background-color: rgba(0, 0, 0, 0.8) !important; /* 80% black opacity */
-}
-
 /* Match roocode.com's container system */
 .navbar__inner {
   max-width: 1400px; /* Match the container width */
@@ -452,7 +467,8 @@ pre {
 
 /* Logo height */
 .navbar__logo {
-  height: 32px; /* h-8 */
+  height: 26px;
+  margin-top: 8px;
   width: auto;
 }
 
@@ -528,9 +544,12 @@ pre {
 
 /* Clean sidebar like roocode.com */
 .theme-doc-sidebar-container {
-  background: hsl(var(--background) / 0.7) !important;
   backdrop-filter: blur(20px);
-  border-right: 1px solid hsl(var(--border) / 0.1) !important;
+  border-right: 1px solid hsl(var(--border)) !important;   
+}
+
+.theme-doc-sidebar-menu {
+  margin: 14px;
 }
 
 /* Clean TOC */
@@ -1179,8 +1198,8 @@ body {
 .navbar__search-input {
   background: none;
   background-color: hsl(var(--background) / 0.5) !important;
-  border: 1px solid hsl(var(--border) / 0.5) !important;
-  border-radius: calc(var(--radius) + 4px) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: calc(var(--radius) * 2) !important;
   color: hsl(var(--foreground)) !important;
   font-size: 0.875rem !important;
   padding: 0.5rem 1rem !important;
@@ -1448,20 +1467,20 @@ body {
 .theme-doc-markdown td,
 .theme-doc-markdown dd,
 .theme-doc-markdown .admonition-content {
+
   color: hsl(var(--foreground) / 0.9) !important; /* 90% brightness */
   font-weight: 400 !important; /* Normal weight */
 }
 
-/* Keep navigation and secondary text slightly dimmer */
 .menu__link,
 .table-of-contents__link,
 .navbar__link,
 .breadcrumbs__link,
 .footer__link-item {
-  color: hsl(var(--foreground) / 0.7) !important; /* 70% for secondary text */
+  color: hsl(var(--foreground) / 0.7) !important; 
+  transition: all 0.25s;
 }
 
-/* Active/hover states should be full brightness */
 .menu__link:hover,
 .menu__link--active,
 .table-of-contents__link:hover,
@@ -1469,25 +1488,20 @@ body {
 .navbar__link:hover,
 a.breadcrumbs__link:hover,
 .footer__link-item:hover {
-  color: hsl(var(--foreground)) !important; /* 100% on hover/active */
+  color: hsl(var(--foreground)) !important;
+  background: none !important;
 }
 
-/* Ensure headings are at full brightness */
-.theme-doc-markdown h1,
-.theme-doc-markdown h2,
-.theme-doc-markdown h3,
-.theme-doc-markdown h4,
-.theme-doc-markdown h5,
-.theme-doc-markdown h6 {
-  color: hsl(var(--foreground)) !important; /* 100% brightness */
-  font-weight: 700; /* Bold for h1-h3 */
+.menu__list-item--collapsed .menu__link--sublist::after,
+.menu__list-item--collapsed .menu__caret::before,
+.menu__link:after,
+.menu__link--active:after {
+  height: 1.2em;
+  width: 1.2em;
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.2rem 1.2rem;
+  transition: transform 0.25s;
 }
 
-.theme-doc-markdown h4,
-.theme-doc-markdown h5,
-.theme-doc-markdown h6 {
-  font-weight: 600; /* Slightly less bold for smaller headings */
-}
 
 /* Content spacing and layout */
 .theme-doc-markdown {
@@ -1523,97 +1537,80 @@ main[class*="docMainContainer"] {
 /* Heading styles */
 .theme-doc-markdown h1,
 .theme-doc-markdown h2,
-.theme-doc-markdown h3 {
-  color: hsl(var(--foreground)) !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  background-clip: unset !important;
+.theme-doc-markdown h3,
+.theme-doc-markdown h4,
+.theme-doc-markdown h5,
+.theme-doc-markdown h6 {
+  background: none;
+  background-clip: unset;
+  color: hsl(var(--foreground));
+  letter-spacing: var(--header-letter-spacing);
+  line-height: var(--header-line-height);
+  margin-bottom: var(--header-bottom-spacing);
+  margin-top: var(--header-top-spacing);
 }
 
 .theme-doc-markdown h1 {
-  font-size: 1.575rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-  margin-top: 0; /* Remove top margin for H1 */
-  margin-bottom: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .theme-doc-markdown h1 {
-    font-size: 2.1rem;
-  }
+  font-size: var(--h1-size);
+  font-weight: 600;
+  margin-top: 0;
 }
 
 .theme-doc-markdown h2 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  margin-top: 1.5rem; /* Reduced from 2rem */
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 640px) {
-  .theme-doc-markdown h2 {
-    font-size: 2.25rem;
-  }
+  font-size: var(--h2-size);
+  font-weight: 600;
 }
 
 .theme-doc-markdown h3 {
-  font-size: 1.5rem;
+  font-size: var(--h3-size);
   font-weight: 600;
-  margin-top: 1.25rem; /* Reduced from 1.5rem */
-  margin-bottom: 0.75rem;
 }
 
 .theme-doc-markdown h4,
 .theme-doc-markdown h5,
 .theme-doc-markdown h6 {
-  font-size: 1.25rem;
+  font-size: var(--h4-size);
   font-weight: 500;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
 }
 
 /* Paragraph spacing - match roocode.com */
 .theme-doc-markdown p {
-  font-size: 1rem;
-  line-height: 1.625;
+  font-size: var(--p-size);
+  line-height: var(--p-line-height);
+  letter-spacing: var(--p-letter-spacing);
   color: hsl(var(--foreground) / 0.9); /* 90% brightness like roocode.com */
   margin-bottom: 1rem;
   font-weight: 400; /* Ensure normal weight */
 }
 
-@media (min-width: 640px) {
-  .theme-doc-markdown p {
-    font-size: 1.125rem;
-  }
-}
-
 /* Link styles */
 .theme-doc-markdown a:not(.hash-link) {
-  color: #60a5fa; /* Blue accent */
+  color: rgba(var(--accent));
   transition: color 200ms;
-  text-decoration: underline;
+  font-weight: 500;
+  text-decoration: none;
   text-underline-offset: 2px;
 }
 
 .theme-doc-markdown a:not(.hash-link):hover {
-  color: #93bbfc; /* Lighter blue on hover */
+  color: rgba(var(--accent), 0.8);
+  text-decoration: underline;
 }
 
 /* List spacing */
 .theme-doc-markdown ul,
 .theme-doc-markdown ol {
-  margin-bottom: 1.5rem;
-  padding-left: 1.5rem;
+  margin-bottom: calc(var(--block-spacing) * 0.5);
+  padding-left: var(--list-inset);
 }
 
 .theme-doc-markdown li {
-  margin-bottom: 0.5rem;
-  line-height: 1.625;
+  margin-bottom: calc(var(--block-spacing) / 4);
+  font-size: var(--text-regular-size);
+  line-height: var(--text-regular-line-height);
   color: hsl(var(--foreground) / 0.9); /* Match paragraph brightness */
   font-weight: 400;
+  
 }
 
 /* Nested list spacing */
@@ -1625,27 +1622,29 @@ main[class*="docMainContainer"] {
 
 /* Code blocks with roocode.com styling */
 .theme-code-block {
-  margin: 2rem 0; /* More spacing */
-  border-radius: calc(var(--radius) + 4px) !important;
+  margin: var(--figure-margin) 0;
+  border-radius: calc(var(--radius)) !important;
   overflow: hidden;
+  box-shadow: var(--block-shadow) !important;
 }
 
 /* Code block container */
 .prism-code {
-  background: hsl(var(--background) / 0.6) !important;
   border: 1px solid hsl(var(--border) / 0.3) !important;
-  font-size: 0.875rem !important; /* Consistent with roocode.com */
+  font-size: 1rem !important;
   line-height: 1.7 !important;
-  padding: 1.5rem !important;
+  padding: 1rem !important;
 }
 
 /* Inline code styling */
 .theme-doc-markdown code {
-  background-color: hsl(var(--background) / 0.6) !important;
-  border: 1px solid hsl(var(--border) / 0.3) !important;
-  padding: 0.2rem 0.4rem !important;
-  font-size: 0.85em !important;
-  border-radius: 0.375rem !important;
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.4rem 0.3rem !important;
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+  
 }
 
 /* Code block title */
@@ -1659,61 +1658,90 @@ main[class*="docMainContainer"] {
   font-weight: 500 !important;
 }
 
-/* Blockquotes like roocode.com */
 .theme-doc-markdown blockquote {
   border-left: 4px solid hsl(var(--border));
   background: hsl(var(--background) / 0.5);
   backdrop-filter: blur(16px);
-  padding: 1rem 1.5rem;
-  margin: 2rem 0;
-  border-radius: 0 calc(var(--radius)) calc(var(--radius)) 0;
+  margin: var(--figure-margin) 0;
+  padding: calc(var(--figure-margin)/2) var(--figure-margin);
 }
 
 .theme-doc-markdown blockquote p {
   margin-bottom: 0;
   color: hsl(var(--muted-foreground));
-  font-style: italic;
 }
 
 /* Admonitions (alerts) with roocode.com style */
 .theme-admonition {
-  margin: 2rem 0 !important;
-  padding: 1.5rem !important;
+  margin: var(--figure-margin) 0 !important;
+  padding: calc(var(--block-spacing) * 0.5) calc(var(--block-spacing) * 0.5) calc(var(--block-spacing) * 0.25) !important;
   border-radius: calc(var(--radius) + 4px) !important;
   border: 1px solid hsl(var(--border) / 0.5) !important;
-  background: hsl(var(--background) / 0.6) !important;
+  background: hsl(var(--card)) !important;
   backdrop-filter: blur(16px) !important;
 }
 
-.theme-admonition-heading {
-  margin-bottom: 0.75rem !important;
-  font-weight: 600 !important;
+.theme-admonition > div {
+  margin-bottom: 0.5em !important;
+  font-size: var(--text-regular-size);
+  font-weight: 700 !important;
+  text-transform: none;
 }
 
-.theme-admonition-icon {
-  margin-right: 0.5rem !important;
+.theme-admonition svg {
+  margin-right: 0.1em !important;
+  height: 1em !important;
+  width: 1em !important;
 }
+
+.theme-admonition-warning > div,
+.theme-admonition-warning > div svg {
+  color: hsl(var(--destructive));
+  fill: hsl(var(--destructive));
+}
+
+.theme-admonition-info > div,
+.theme-admonition-info > div svg {
+  color: rgb(var(--accent));
+  fill: rgb(var(--accent));
+}
+
 
 /* Tables with roocode.com styling */
 .theme-doc-markdown table {
   width: 100%;
-  margin: 2rem 0;
+  margin: var(--figure-margin) 0;
   border-collapse: separate;
   border-spacing: 0;
+  border-radius: calc(var(--radius)/2);
+  box-shadow: var(--block-shadow);
   overflow: hidden;
   background: hsl(var(--background) / 0.3);
+}
+
+.theme-doc-markdown table tr {
+  border: none;
+}
+
+.theme-doc-markdown th,
+.theme-doc-markdown td {
+  vertical-align: top;
 }
 
 .theme-doc-markdown th {
   background: hsl(var(--background) / 0.6);
   padding: 0.75rem 1rem;
   text-align: left;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: var(--header-letter-spacing);
   color: hsl(var(--foreground));
+  border: none;
+  border-bottom: 2px solid hsl(var(--border) / 0.5);
 }
 
 .theme-doc-markdown td {
   padding: 0.75rem 1rem;
+  border: none;
   border-bottom: 1px solid hsl(var(--border) / 0.3);
   color: hsl(var(--foreground) / 0.9); /* Match body text brightness */
 }
@@ -1746,16 +1774,23 @@ main[class*="docMainContainer"] {
 
 .menu__link {
   padding: 0.375rem 0.75rem; /* Reduced vertical padding */
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--radius));
   transition: all 200ms ease;
-  font-size: 0.875rem; /* Ensure consistent font size */
+  font-size: var(--text-regular-size); /* Ensure consistent font size */
+}
+
+.menu__link:hover,
+.menu__list-item-collapsible:hover {
+  background: none !important;
 }
 
 /* Nested menu items */
 .menu__list .menu__list {
+  border-left: 1px solid hsl(var(--border));
   margin-left: 0.75rem; /* Indentation for nested items */
-  margin-top: 0;
-  margin-bottom: 0;
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+  padding-left: 0.5em;
 }
 
 /* Category headers */
@@ -1778,17 +1813,19 @@ main[class*="docMainContainer"] {
   background: hsl(var(--background) / 0.5);
 }
 
-.menu__link--active {
-  background: hsl(var(--background) / 0.7);
-  font-weight: 500;
+.menu__link--active,
+.menu__link--active:not(.menu__link--sublist) {
+  background: none;
+}
+
+.menu__list_item .menu__link--active {
+  background: red !important;
 }
 
 /* TOC styling */
 .table-of-contents {
   padding: 0.5rem 0.75rem; /* Match left sidebar spacing */
-  background: hsl(var(--background) / 0.3);
-  border-radius: calc(var(--radius));
-  border: 1px solid hsl(var(--border) / 0.3);
+  border-left: 1px solid hsl(var(--border));
   backdrop-filter: blur(16px);
 }
 
@@ -1821,14 +1858,32 @@ main[class*="docMainContainer"] {
   font-weight: 500;
 }
 
-/* Images with roocode.com styling */
-.theme-doc-markdown img {
+.theme-doc-markdown img.icon {
+  display: inline-block;
+  height: 1rem;
+  margin: 0;
+  width: 1rem;
+}
+
+.theme-doc-markdown img:not(.icon) {
   max-width: 100%;
   height: auto;
-  border-radius: calc(var(--radius) + 4px);
-  border: 1px solid hsl(var(--border) / 0.3);
-  margin: 2rem 0;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  border-radius: var(--radius);
+  outline: 1px solid hsl(var(--border));
+  margin: var(--block-spacing) 0;
+  overflow: hidden;
+  box-shadow: var(--block-shadow);
+  transition: transform 0.1s;
+}
+
+.theme-doc-markdown img:not(.icon):hover {
+  outline-width: 3px;
+  transform: scale(1.025);
+}
+
+.theme-doc-markdown li img {
+  margin-bottom: calc(var(--block-spacing) / 2) !important;
+  margin-top: calc(var(--block-spacing) / 4) !important;
 }
 
 /* Image captions */
@@ -1845,14 +1900,14 @@ main[class*="docMainContainer"] {
 .theme-doc-markdown hr {
   border: none;
   height: 1px;
-  background: hsl(var(--border) / 0.5);
-  margin: 1.5rem 0; /* Reduced from 3rem */
+  background: hsl(var(--border) / 0.75);
+  margin: var(--block-spacing) 0;
   position: relative;
 }
 
 /* Optional: decorative HR */
 .theme-doc-markdown hr::after {
-  content: '◆';
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2027,15 +2082,29 @@ html {
   }
 }
 
+.theme-doc-footer {
+  padding: 0 2rem;
+}
+
+.copy-button {
+  margin-top: -1rem !important;
+}
+
 /* Breadcrumbs styling */
+.breadcrumbs,
 .theme-doc-breadcrumbs {
-  margin-bottom: 2rem;
-  margin-left: 1.25rem;
+  margin-bottom: 1rem;
+  margin-left: 0.7rem;
   font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  width: 100%
 }
 
 .breadcrumbs__item {
   color: hsl(var(--muted-foreground));
+  cursor: default;
 }
 
 .breadcrumbs__link {
@@ -2103,7 +2172,7 @@ a.breadcrumbs__link:hover {
 }
 
 .footer__logo-container img {
-  height: 24px !important; /* Smaller than navbar logo */
+  height: 20px !important; /* Smaller than navbar logo */
   width: auto !important;
 }
 
@@ -2127,6 +2196,7 @@ a.breadcrumbs__link:hover {
 
 .footer__social-icons svg {
   display: inline-block !important;
+  height: 20px;
   visibility: visible !important;
 }
 

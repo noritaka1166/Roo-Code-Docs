@@ -1,0 +1,59 @@
+---
+description: The Roo Code Cloud is the easiest way to use Roo Code without additional accounts and dealing with API keys
+keywords:
+  - Roo Code Cloud
+  - Roo Code Cloud Provider
+  - LLM
+  - Models
+image: /img/social-share.jpg
+---
+
+# Roo Code Cloud Provider Overview
+
+
+To make it as smooth as possible to use Roo Code, which depends on a provider service for LLM inference, we've built the Roo Code Cloud Provider.
+
+You don't have to use our provider to use Roo Code (you can choose from dozens), but it's the easiest way to do it, since it only needs your Roo Code Cloud account and offers a selection of models we tested and approved to work with Roo Code.:
+- State of the art models from the top frontier labs (including Anthropic, OpenAI, Google, xAi, etc)
+- Tested open weight models from upcoming labs (Moonshot AI, MiniMax, GLM, etc)
+
+## Model Availability
+
+Specific model availability changes over time. We strive to
+keep the list relatively short, so you know you can trust
+whatever you pick.
+
+You can always find the current list [on our website](https://roocode.com/provider) or the Roo Code Cloud app, under ["Models"](https://app.roocode.com/models).
+
+## Price and Privacy
+
+We never use your data for training and don't keep logs of the prompts themselves
+(keep in mind that if you use task sync or Cloud Agents, we have to keep
+copies of your tasks for obvious reasons).
+
+Sometimes stealth models are offered completely for free. These are
+usually advanced models in late stages of testing, with code names and
+limited availability. These models will most likely involve the use
+of your prompts as training data, so be mindful of that when using.
+
+Paid models most likely don't use any of your data for training, but it's always
+best to check the privacy policy of the vendors themselves.
+
+You can always find the current pricing [on our website](https://roocode.com/provider) or the Roo Code Cloud app, under ["Models"](https://app.roocode.com/models).
+
+## How to use it
+
+### Roo Code Cloud Agents
+
+When choosing a model to power your agent, just pick the Roo Code Cloud provider.
+There aren't really any more instructions needed :)
+
+### Roo Code VS Code Extension
+
+Ensure you're logged into your Cloud account in the extension, and you'll
+be able to configure Roo as a provider in Provider Settings.
+
+### In 3rd-party tools
+
+Since it's designed to make it easier to use Roo, we don't make the provider
+available in other products. There's no API key for you to copy and use elsewhere.

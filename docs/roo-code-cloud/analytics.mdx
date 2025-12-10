@@ -1,12 +1,13 @@
 ---
-description: Track usage and credits in Roo Code Cloud. View tokens, tasks, estimated cost, and credit consumption over time; learn where to check spend for Cloud Agents.
+description: Monitor token usage, track costs, and analyze agent performance with Roo Code Cloud Analytics.
 keywords:
-  - Roo Code Cloud
   - analytics
-  - usage
-  - tokens
+  - token usage
+  - cost tracking
+  - agent performance
+  - roi
+  - team insights
   - credits
-  - cost
 image: /img/social-share.jpg
 redirect_from:
   - /roo-code-cloud/dashboard
@@ -14,15 +15,57 @@ redirect_from:
   - /roo-code-cloud/dashboard#usage-analytics-page
 ---
 
-# Analytics
+# Usage Analytics
 
-Analytics lets you track tokens, tasks, inference cost, and Cloud Agent credits usage in aggregate or according to a range of filters, defined by you. It's all free.
+Roo Code Cloud provides comprehensive analytics to help you understand how your team is using AI, optimize costs, and measure productivity.
+
+<img src="/img/analytics/overview.png" alt="Analytics Dashboard" width="800" />
 
 ## Access
 
-- Just go to the [Analytics](https://app.roocode.com/usage) tab
+Go to the [Analytics](https://app.roocode.com/usage) tab in Roo Code Cloud.
 
-## What's tracked
+---
+
+## Capabilities
+
+With the UI controls available, you can slice and dice all of these together:
+
+<table>
+  <thead>
+    <tr>
+      <th style={{ width: "33%"}}>Metrics</th>
+      <th style={{ width: "33%"}}>Aggregations</th>
+      <th style={{ width: "33%"}}>Filters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>
+        - Number of tasks
+        - Number of tokens
+        - Inference cost (as reported by the provider)
+        - Cloud usage run time
+      </th>
+      <th>
+        - User
+        - Cloud Agent
+        - Model
+        - Repository
+      </th>
+      <th>
+        - Task source (Cloud Agent or workspace/IDE)
+        - Creator
+        - Repository
+        - PR
+        - Provider
+        - Timeframe
+      </th>
+    </tr>
+  </tbody>
+</table>
+
+## What gets tracked?
 
 - For Cloud Agents, all tasks are tracked and considered for analytics
-- For the extension, only tasks you run while logged in get reported for analytics. You can turn off [task sync](/roo-code-cloud/task-sync) so the contents of tasks aren't sent to Cloud, but usage numbers are always reported while you're logged into the extension. That allows you to keep certain tasks away from Cloud while still benefiting from usage analytics.
+- For the extension, only tasks you run while logged in and with [Task Sync](/roo-code-cloud/task-sync) enabled get reported for analytics. You can turn off task sync so the contents of tasks aren't sent to Cloud, but usage numbers are always reported while you're logged into the extension. That allows you to keep the contents of certain tasks away from Cloud while still benefiting from usage analytics.
