@@ -1,15 +1,12 @@
 ---
 sidebar_label: OpenAI
-description: Connect Roo Code to OpenAI's official API for access to GPT-5, GPT-4o, o1, and o3 models with advanced reasoning capabilities and verbosity control.
+description: Connect Roo Code to OpenAI's official API for access to GPT and reasoning models with advanced capabilities and verbosity control.
 keywords:
   - OpenAI
-  - GPT-5
-  - GPT-4o
-  - o1 models
-  - o3-mini
+  - GPT models
+  - reasoning models
   - Roo Code
   - AI integration
-  - reasoning models
   - API key
   - official OpenAI API
   - verbosity
@@ -49,7 +46,7 @@ For the complete, up-to-date model list and capabilities, see [OpenAI's models d
 1.  **Open Roo Code Settings:** Click the gear icon (<Codicon name="gear" />) in the Roo Code panel.
 2.  **Select Provider:** Choose "OpenAI" from the "API Provider" dropdown.
 3.  **Enter API Key:** Paste your OpenAI API key into the "OpenAI API Key" field.
-4.  **Select Model:** Choose your desired model from the "Model" dropdown (defaults to `gpt-5.1`).
+4.  **Select Model:** Choose your desired model from the "Model" dropdown.
 5.  **(Optional) Base URL:** If you need to use a custom base URL, enter the URL. Most people won't need to adjust this.
 
 ---
@@ -71,7 +68,7 @@ For models that support reasoning (GPT-5, o1, o3, o4 families), you can control 
 - `medium` - Balanced approach
 - `high` - Maximum thinking for complex problems
 
-Some models have preset reasoning levels (e.g., `o3-high` always uses high reasoning).
+Some models have preset reasoning levels that cannot be changed.
 
 ### Verbosity Control
 

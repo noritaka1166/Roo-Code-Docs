@@ -48,19 +48,19 @@ To use LiteLLM with Roo Code, you first need to set up and run a LiteLLM server.
    ```yaml
    model_list:
      # Configure Anthropic models
-     - model_name: claude-3-7-sonnet
+     - model_name: claude-sonnet
        litellm_params:
-         model: anthropic/claude-3-7-sonnet-20250219
+         model: anthropic/claude-sonnet-model-id
          api_key: os.environ/ANTHROPIC_API_KEY
      
      # Configure OpenAI models
-     - model_name: gpt-4o
+     - model_name: gpt-model
        litellm_params:
-         model: openai/gpt-4o
+         model: openai/gpt-model-id
          api_key: os.environ/OPENAI_API_KEY
      
      # Configure Azure OpenAI
-     - model_name: azure-gpt-4
+     - model_name: azure-model
        litellm_params:
          model: azure/my-deployment-name
          api_base: https://your-resource.openai.azure.com/
@@ -77,7 +77,7 @@ To use LiteLLM with Roo Code, you first need to set up and run a LiteLLM server.
    
    # Or quick start with a single model
    export ANTHROPIC_API_KEY=your-anthropic-key
-   litellm --model claude-3-7-sonnet-20250219
+   litellm --model anthropic/claude-model-id
    ```
 
 4. The proxy will run at `http://0.0.0.0:4000` by default (accessible as `http://localhost:4000`).
@@ -105,7 +105,7 @@ Once your LiteLLM server is running, you have two options for configuring it in 
     *   Roo Code will attempt to fetch the list of available models from your LiteLLM server by querying the `${baseUrl}/v1/model/info` endpoint.
     *   The models displayed in the dropdown are sourced from this endpoint.
     *   Use the refresh button to update the model list if you've added new models to your LiteLLM server.
-    *   If no model is selected, Roo Code defaults to `anthropic/claude-3-7-sonnet-20250219` (this is `litellmDefaultModelId`). Ensure this model (or your desired default) is configured and available on your LiteLLM server.
+    *   If no model is selected, Roo Code will use a default model. Ensure you have configured at least one model on your LiteLLM server.
 
 ### Option 2: Using OpenAI Compatible Provider
 
@@ -133,7 +133,7 @@ When you configure the LiteLLM provider, Roo Code interacts with your LiteLLM se
     *   `supportsImages`: Determined from `model_info.supports_vision` provided by LiteLLM.
     *   `supportsPromptCache`: Determined from `model_info.supports_prompt_caching` provided by LiteLLM.
     *   `inputPrice` / `outputPrice`: Calculated from `model_info.input_cost_per_token` and `model_info.output_cost_per_token` from LiteLLM.
-    *   `supportsComputerUse`: This flag is set to `true` if the underlying model identifier (from `litellm_params.model`, e.g., `openrouter/anthropic/claude-3.5-sonnet`) matches one of the Anthropic models predefined in Roo Code as suitable for "computer use" (see `COMPUTER_USE_MODELS` in technical details).
+    *   `supportsComputerUse`: This flag is set to `true` if the underlying model identifier matches one of the Anthropic models predefined in Roo Code as suitable for "computer use" (see `COMPUTER_USE_MODELS` in technical details).
 
 Roo Code uses default values for some of these properties if they are not explicitly provided by your LiteLLM server's `/model/info` endpoint for a given model. The defaults are:
 *   `maxTokens`: 8192

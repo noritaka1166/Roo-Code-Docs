@@ -46,7 +46,7 @@ For the complete, up-to-date model list and capabilities, see [Google's Gemini m
 3.  **Enter API Key:** Paste your Gemini API key into the "Gemini API Key" field.
 4.  **Select Model:** Choose your desired Gemini model from the "Model" dropdown.
 
-By default, Roo Code selects a stable Pro model (currently a Gemini 2.5 Pro variant) with a temperature of **1.0** where your provider supports it. This keeps suggestions more expressive and natural while still staying on task. If you need highly deterministic output (for example, for code generation in CI), you can lower the temperature toward `0.0`.
+By default, Roo Code selects a stable Pro model with a temperature of **1.0** where your provider supports it. This keeps suggestions more expressive and natural while still staying on task. If you need highly deterministic output (for example, for code generation in CI), you can lower the temperature toward `0.0`.
 
 ---
 

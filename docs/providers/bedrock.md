@@ -53,7 +53,7 @@ Roo Code supports all foundation models available through Amazon Bedrock.
 
 For the complete, up-to-date model list with IDs and capabilities, see [AWS Bedrock's supported models documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html).
 
-**Important:** Use the *model ID* (e.g., `anthropic.claude-sonnet-4-5-20250929-v1:0`) when configuring Roo Code, not the model name.
+**Important:** Use the *model ID* when configuring Roo Code, not the model name.
 
 ---
 
@@ -84,7 +84,7 @@ Roo Code supports using the reasoning budget (extended thinking) for Anthropic's
 
 To enable the reasoning budget:
 
-1.  **Select a supported Claude model** (e.g., `anthropic.claude-opus-4.1-20250514-v1:0`, `anthropic.claude-3-sonnet-20240229-v1:0`).
+1.  **Select a supported Claude model** that includes reasoning capabilities.
 2.  **Enable Reasoning Mode** in the model settings.
 3.  **Adjust the thinking budget** to control how much the model should "think".
 

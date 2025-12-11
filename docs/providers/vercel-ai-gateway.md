@@ -41,8 +41,6 @@ Roo Code automatically fetches all available models from Vercel AI Gateway's API
 
 For the complete, up-to-date model catalog with capabilities, see [Vercel's AI Gateway models page](https://vercel.com/ai-gateway/models).
 
-**Default:** `anthropic/claude-sonnet-4` if no model is selected.
-
 ---
 
 ## Configuration in Roo Code
