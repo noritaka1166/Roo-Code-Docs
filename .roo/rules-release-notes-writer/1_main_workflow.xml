@@ -110,10 +110,10 @@ gh pr list --repo RooCodeInc/Roo-Code --state merged --base main --limit 1000 \
       <initialization priority="CRITICAL">
         <action>Create .roo/tmp/release-notes/temp_pr_analysis_v[version].md</action>
         <details>
-          Parent task MUST create this file (and .roo/tmp/release-notes/temp_pr_inclusion_v[version].json, .roo/tmp/release-notes/temp_pr_list_v[VERSION].md if needed) before ANY subtasks.
-          Subtasks will ONLY append using insert_content.
-          Parent task MUST NOT append to temp_pr_analysis_v[version].md; this file is reserved exclusively for subtask outputs. The parent may only create/initialize the empty file(s).
-          Temp files live under .roo/tmp/release-notes/
+      Parent task MUST create this file (and .roo/tmp/release-notes/temp_pr_inclusion_v[version].json, .roo/tmp/release-notes/temp_pr_list_v[VERSION].md if needed) before ANY subtasks.
+      Subtasks will ONLY add entries to these temp files using the available safe file-editing capability (preserve existing content; no overwrites).
+      Parent task MUST NOT add entries to temp_pr_analysis_v[version].md; this file is reserved exclusively for subtask outputs. The parent may only create/initialize the empty file(s).
+      Temp files live under .roo/tmp/release-notes/
         </details>
       </initialization>
       
@@ -139,7 +139,7 @@ gh pr list --repo RooCodeInc/Roo-Code --state merged --base main --limit 1000 \
   3. Get issue details if linked
   4. Categorize change (Feature/QOL/Bug Fix/Provider Update)
   5. Identify documentation needs (new features, behavior changes, deprecations)
-  6. Append to .roo/tmp/release-notes/temp_pr_analysis_v[version].md using insert_content line 0
+      6. Add to .roo/tmp/release-notes/temp_pr_analysis_v[version].md at the start, preserving existing content (use the available safe file-editing capability)
   
   Include documentation flags:
   - docs-new: Completely new feature
@@ -147,7 +147,7 @@ gh pr list --repo RooCodeInc/Roo-Code --state merged --base main --limit 1000 \
   - docs-example: New examples needed
   - docs-migration: Breaking changes
   
-  CRITICAL: Never create/overwrite files, only append.
+  CRITICAL: Never overwrite existing content; only add entries while preserving prior content.
   MANDATORY: Insert the marker line '&lt;!-- generated-by-subtask: true --&gt;' immediately before the '---' separator in each PR entry.
   </message_template>
         <todos_template>
@@ -187,7 +187,7 @@ gh pr list --repo RooCodeInc/Roo-Code --state merged --base main --limit 1000 \
 Get PR details: gh pr view 1234 --repo RooCodeInc/Roo-Code --json number,title,author,mergedAt,labels,body,url
 Extract linked issues and get details
 Categorize the change and identify documentation needs
-Append analysis to .roo/tmp/release-notes/temp_pr_analysis_v3.20.1.md using insert_content line 0</message>
+Add analysis to .roo/tmp/release-notes/temp_pr_analysis_v3.20.1.md at the start, preserving existing content</message>
 <todos>
 [ ] Fetch PR #1234 details
 [ ] Extract linked issues and get details
@@ -199,7 +199,7 @@ Append analysis to .roo/tmp/release-notes/temp_pr_analysis_v3.20.1.md using inse
         <critical_notes>
           - Parent creates temp files first
           - Each PR gets its own subtask
-          - Subtasks only append, never overwrite
+          - Subtasks only add entries; never overwrite existing content
         </critical_notes>
       </subtask_creation_example>
     </phase>
@@ -366,7 +366,7 @@ fi
         <action>Supplement candidate PR set with changelog-referenced PRs not in fetched list and spawn analysis subtasks</action>
         <details>
           - Identify referenced PR numbers from step 2 that are missing from .roo/tmp/release-notes/temp_pr_analysis_v[version].md
-          - For each missing PR, fetch details and create a new investigation subtask (same pattern as pr_processing) to append analysis to temp_pr_analysis_v[version].md
+          - For each missing PR, fetch details and create a new investigation subtask (same pattern as pr_processing) to add analysis to temp_pr_analysis_v[version].md without overwriting existing content
           - Mark these as out_of_range if their mergedAt is outside the computed date window
           - Wait for all spawned subtasks to complete before proceeding
         </details>
@@ -378,7 +378,7 @@ gh pr view N --repo RooCodeInc/Roo-Code --json number,title,author,mergedAt,labe
           <spawn_subtask><![CDATA[
 <new_task>
 <mode>release-notes-writer</mode>
-<message>Investigate PR #[NUMBER] (changelog-referenced, possibly out of original range) for release notes v[version]. Follow standard analysis and append to .roo/tmp/release-notes/temp_pr_analysis_v[version].md.</message>
+<message>Investigate PR #[NUMBER] (changelog-referenced, possibly out of original range) for release notes v[version]. Follow standard analysis and add to .roo/tmp/release-notes/temp_pr_analysis_v[version].md without overwriting existing content.</message>
 <todos>
 [ ] Fetch PR #[NUMBER] details using gh pr view --repo RooCodeInc/Roo-Code
 [ ] Extract linked issues from PR body
@@ -709,10 +709,10 @@ gh pr list --repo RooCodeInc/Roo-Code --state merged --base main --limit 1000 \
       Date format is YYYY-MM-DD (ISO 8601) where MM is month (01-12)
     </rule>
     <rule priority="CRITICAL">
-      Parent task creates temp files, subtasks only append
+      Parent task creates temp files, subtasks only add entries (never overwrite)
     </rule>
     <rule priority="CRITICAL">
-      For each PR, the parent MUST create a subtask via new_task. The parent MUST NOT write PR analysis entries; only subtasks may append to .roo/tmp/release-notes/temp_pr_analysis_v[version].md. Do not proceed to changelog_alignment or compilation until all PR subtasks complete.
+      For each PR, the parent MUST create a subtask via new_task. The parent MUST NOT write PR analysis entries; only subtasks may add entries to .roo/tmp/release-notes/temp_pr_analysis_v[version].md without overwriting existing content. Do not proceed to changelog_alignment or compilation until all PR subtasks complete.
       Even when the parent already has the PR number, title, description, or a user‑provided
       summary list, it MUST still create and wait on the per‑PR subtask. These summaries are
       insufficient for functional understanding of the change, discovery of linked issues, and
