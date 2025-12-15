@@ -166,7 +166,6 @@ Concluding sentence about the benefit.
       3. ## Bug Fixes
       4. ## Misc Improvements
       5. ## Provider Updates
-      6. ## Documentation Updates
     </order>
     <critical>QOL Improvements MUST always come before Bug Fixes</critical>
   </section_ordering>
