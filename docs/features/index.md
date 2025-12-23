@@ -58,6 +58,7 @@ Discover the powerful features that make Roo Code your ultimate AI-powered codin
 
 Push the boundaries with cutting-edge capabilities:
 
+- [**Custom Tools**](/features/experimental/custom-tools) - Define TypeScript/JavaScript tools that Roo can call
 - [**Concurrent File Edits**](/features/experimental/concurrent-file-edits) - Edit multiple files in a single operation
 - [**Power Steering**](/features/experimental/power-steering) - Enhanced consistency in AI responses
 - [**More Experimental Features**](/features/experimental/experimental-features) - Explore features under development

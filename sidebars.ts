@@ -70,6 +70,7 @@ const sidebars: SidebarsConfig = {
           label: 'Experimental',
           items: [
             'features/experimental/experimental-features',
+            'features/experimental/custom-tools',
             'features/experimental/concurrent-file-edits',
             'features/experimental/power-steering',
             'features/experimental/background-editing',

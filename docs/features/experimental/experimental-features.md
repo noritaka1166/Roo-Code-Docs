@@ -32,6 +32,7 @@ To enable or disable experimental features:
 
 The following experimental features are currently available:
 
+- [Custom Tools](/features/experimental/custom-tools) - Define TypeScript/JavaScript tools that Roo can call like built-in tools
 - [Concurrent File Edits](/features/experimental/concurrent-file-edits) - Edit multiple files in a single operation
 - [Power Steering](/features/experimental/power-steering) - Enhanced consistency in AI responses
 - [Background Editing](/features/experimental/background-editing) - Work uninterrupted while Roo edits files in the background
