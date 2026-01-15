@@ -7,6 +7,12 @@
       "cloud": true
     },
     {
+      "id": "providers/openai-chatgpt-plus-pro",
+      "title": "ChatGPT Plus/Pro",
+      "extension": true,
+      "cloud": false
+    },
+    {
       "id": "providers/claude-code",
       "title": "Claude Code",
       "extension": true,
