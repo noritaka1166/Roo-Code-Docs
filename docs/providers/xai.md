@@ -90,5 +90,3 @@ Prompt caching is available for select Grok models including `grok-code-fast-1`,
 ## Pricing
 
 Pricing varies by model. Refer to the [xAI documentation](https://console.x.ai/) for current pricing information.
-
-**Note:** `grok-code-fast-1` is available for free through [Roo Code Router](/providers/roo-code-router) during the promotional period. Standard pricing will apply when using the xAI provider directly in Roo Code.
