@@ -1,6 +1,6 @@
 <xml_structuring_best_practices>
   <overview>
-    XML tags help Claude parse prompts more accurately, leading to higher-quality outputs.
+    XML tags help LLMs parse prompts more accurately, leading to higher-quality outputs.
     This guide covers best practices for structuring mode instructions using XML.
   </overview>
 
@@ -9,13 +9,13 @@
       Clearly separate different parts of your instructions and ensure well-structured content
     </benefit>
     <benefit type="accuracy">
-      Reduce errors caused by Claude misinterpreting parts of your instructions
+      Reduce errors caused by the model misinterpreting parts of your instructions
     </benefit>
     <benefit type="flexibility">
       Easily find, add, remove, or modify parts of instructions without rewriting everything
     </benefit>
     <benefit type="parseability">
-      Having Claude use XML tags in its output makes it easier to extract specific parts of responses
+      Having the model use XML tags in its output makes it easier to extract specific parts of responses
     </benefit>
   </why_use_xml_tags>
 
@@ -61,7 +61,7 @@
   <common_tag_patterns>
     <pattern name="workflow_structure">
       <usage>For step-by-step processes</usage>
-      <template><![CDATA[
+      <template>
 <workflow>
   <overview>High-level description</overview>
   <prerequisites>
@@ -79,12 +79,12 @@
     </step>
   </steps>
 </workflow>
-      ]]></template>
+      </template>
     </pattern>
 
     <pattern name="examples_structure">
       <usage>For providing code examples and demonstrations</usage>
-      <template><![CDATA[
+      <template>
 <examples>
   <example name="descriptive_name">
     <description>What this example demonstrates</description>
@@ -97,12 +97,12 @@
     </explanation>
   </example>
 </examples>
-      ]]></template>
+      </template>
     </pattern>
 
     <pattern name="guidelines_structure">
       <usage>For rules and best practices</usage>
-      <template><![CDATA[
+      <template>
 <guidelines category="category_name">
   <guideline priority="high">
     <rule>The specific rule or guideline</rule>
@@ -110,33 +110,29 @@
     <exceptions>When this doesn't apply</exceptions>
   </guideline>
 </guidelines>
-      ]]></template>
+      </template>
     </pattern>
 
-    <pattern name="tool_usage_structure">
-      <usage>For documenting how to use specific tools</usage>
-      <template><![CDATA[
-<tool_usage tool="tool_name">
-  <purpose>What this tool accomplishes</purpose>
-  <when_to_use>Specific scenarios for this tool</when_to_use>
-  <syntax>
-    <command>The exact command format</command>
-    <parameters>
-      <parameter name="param1" required="true">
-        <description>What this parameter does</description>
-        <type>string|number|boolean</type>
-        <example>example_value</example>
-      </parameter>
-    </parameters>
-  </syntax>
-  <examples>
-    <example scenario="common_use_case">
-      <code>Actual usage example</code>
-      <output>Expected output</output>
-    </example>
-  </examples>
-</tool_usage>
-      ]]></template>
+    <pattern name="decision_guidance_structure">
+      <usage>For documenting decision criteria and guardrails</usage>
+      <template>
+<decision_guidance>
+  <principles>
+    <principle>Do not include runtime implementation details (no function names, command names, UI entry points, or execution syntax)</principle>
+    <principle>Prefer the smallest change that satisfies the request</principle>
+    <principle>Prefer a single source of truth; avoid duplicated rules across files</principle>
+    <principle>Ask a clarifying question only when critical ambiguity remains</principle>
+  </principles>
+
+  <constraints>
+    Constraints and guardrails (e.g., permissions, file restrictions, or other limits).
+  </constraints>
+
+  <validation>
+    What to verify after changes (cohesion, examples updated, boundaries clear).
+  </validation>
+</decision_guidance>
+      </template>
     </pattern>
   </common_tag_patterns>
 
@@ -152,7 +148,7 @@
     </guideline>
     <guideline name="cdata_sections">
       Use CDATA for code blocks or content with special characters:
-      <![CDATA[<code><![CDATA[your code here]]></code>]]>
+      <code>your code here</code>
     </guideline>
     <guideline name="attributes_vs_elements">
       Use attributes for metadata, elements for content:
@@ -162,19 +158,22 @@
         </step>
       </example>
     </guideline>
+    <guideline name="verbosity">
+      Keep narrative outputs concise; reserve detailed exposition for code, diffs, and structured outputs. Prefer readable, maintainable code with clear names; avoid one-liners unless explicitly requested.
+    </guideline>
   </formatting_guidelines>
 
   <anti_patterns>
     <anti_pattern name="flat_structure">
       <description>Avoid completely flat structures without hierarchy</description>
-      <bad><![CDATA[
+      <bad>
 <instructions>
 <item1>Do this</item1>
 <item2>Then this</item2>
 <item3>Finally this</item3>
 </instructions>
-      ]]></bad>
-      <good><![CDATA[
+      </bad>
+      <good>
 <instructions>
   <steps>
     <step order="1">Do this</step>
@@ -182,7 +181,7 @@
     <step order="3">Finally this</step>
   </steps>
 </instructions>
-      ]]></good>
+      </good>
     </anti_pattern>
 
     <anti_pattern name="inconsistent_naming">
@@ -199,6 +198,23 @@
       <description>Avoid tags that don't convey meaning</description>
       <bad>data, info, stuff, thing, item</bad>
       <good>user_input, validation_result, error_message, configuration</good>
+    </anti_pattern>
+    <anti_pattern name="over_clarifying_questions">
+      <description>Avoid asking the user to confirm obvious next steps on straightforward tasks</description>
+      <bad>Asking multiple clarifying questions before acting when the task is simple</bad>
+      <good>Proceed when next steps are clear; ask only when critical ambiguity remains; document assumptions</good>
+    </anti_pattern>
+
+    <anti_pattern name="excessive_searching">
+      <description>Avoid repetitive or redundant searches when the relevant target is already identified</description>
+      <bad>Running multiple identical searches instead of acting</bad>
+      <good>Stop once the change is clearly identified; then implement</good>
+    </anti_pattern>
+
+    <anti_pattern name="over_specifying_runtime_behavior">
+      <description>Avoid duplicating runtime behavior that is already defined elsewhere</description>
+      <bad>Documenting execution constraints, operation ordering, or invocation details</bad>
+      <good>Focus on intent, artifacts, decision criteria, and validation expectations</good>
     </anti_pattern>
   </anti_patterns>
 

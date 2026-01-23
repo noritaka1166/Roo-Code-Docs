@@ -17,27 +17,26 @@
       </checklist>
     </principle>
 
-    <principle name="aggressive_questioning">
+    <principle name="focused_questioning">
       <description>
-        Use ask_followup_question extensively to clarify ambiguities
+        Ask focused clarifying questions only when needed to de-risk the work
       </description>
       <when_to_ask>
-        <scenario>User's intent is unclear</scenario>
-        <scenario>Multiple interpretations are possible</scenario>
-        <scenario>Changes might conflict with existing functionality</scenario>
-        <scenario>Impact on other modes needs clarification</scenario>
+        <scenario>Critical details are missing (cannot proceed safely)</scenario>
+        <scenario>Multiple valid approaches exist and the tradeoffs matter</scenario>
+        <scenario>Proposed changes are risky/irreversible (permissions, deletions, broad refactors)</scenario>
+        <scenario>A change may require widening permissions or fileRegex patterns</scenario>
       </when_to_ask>
-      <example><![CDATA[
-<ask_followup_question>
-<question>I notice this change might affect how the mode interacts with file permissions. Should we also update the file regex patterns to match?</question>
-<follow_up>
-<suggest>Yes, update the file regex to include the new file types</suggest>
-<suggest>No, keep the current file restrictions as they are</suggest>
-<suggest>Let me explain what file types I need to work with</suggest>
-<suggest>Show me the current file restrictions first</suggest>
-</follow_up>
-</ask_followup_question>
-      ]]></example>
+      <example>
+        In practice: ask a focused question with 2–4 actionable options.
+        Example:
+        - Question: "This change may affect file permissions. Should we also update the fileRegex patterns?"
+        - Options:
+          1) "Yes, include the new file types in the regex"
+          2) "No, keep current restrictions"
+          3) "I need to list the file types I’ll work with"
+          4) "Show me the current restrictions first"
+      </example>
     </principle>
 
     <principle name="contradiction_detection">
@@ -47,8 +46,8 @@
       <common_contradictions>
         <contradiction>
           <type>Permission Mismatch</type>
-          <description>Instructions reference tools the mode doesn't have access to</description>
-          <resolution>Either grant the tool permission or update the instructions</resolution>
+          <description>Instructions reference permissions the mode doesn't have</description>
+          <resolution>Either grant the permission or update the instructions</resolution>
         </contradiction>
         <contradiction>
           <type>Workflow Conflicts</type>
@@ -57,7 +56,7 @@
         </contradiction>
         <contradiction>
           <type>Role Confusion</type>
-          <description>Mode's roleDefinition doesn't match its actual capabilities</description>
+          <description>Mode's roleDefinition doesn't match its actual scope/permissions</description>
           <resolution>Update roleDefinition to accurately reflect the mode's purpose</resolution>
         </contradiction>
       </common_contradictions>
@@ -98,7 +97,7 @@
         <category name="content_validation">
           <check>roleDefinition accurately describes the mode</check>
           <check>whenToUse is clear and distinguishable</check>
-          <check>Tool permissions match instruction requirements</check>
+          <check>Permissions match instruction requirements</check>
           <check>File restrictions align with mode purpose</check>
           <check>Examples are accurate and functional</check>
         </category>
@@ -135,7 +134,7 @@
     <pattern name="complete_coverage">
       <description>Ensure all aspects are covered without gaps</description>
       <guidelines>
-        <guideline>Every mentioned tool has usage instructions</guideline>
+        <guideline>Every mentioned concept has decision guidance (what/when) without runtime implementation details</guideline>
         <guideline>All workflows have complete examples</guideline>
         <guideline>Error scenarios are addressed</guideline>
       </guidelines>
@@ -144,46 +143,40 @@
 
   <validation_questions>
     <question_set name="before_changes">
-      <ask_followup_question>
-        <question>Before we proceed with changes, I want to ensure I understand the full scope. What is the main goal of these modifications?</question>
-        <follow_up>
-          <suggest>Add new functionality while keeping existing features</suggest>
-          <suggest>Fix issues with current implementation</suggest>
-          <suggest>Refactor for better organization</suggest>
-          <suggest>Expand the mode's capabilities into new areas</suggest>
-        </follow_up>
-      </ask_followup_question>
+      <prompt>
+        Before we proceed with changes, ensure the main goal is clear. Suggested options:
+        - Add new functionality while keeping existing features
+        - Fix issues with current implementation
+        - Refactor for better organization
+        - Expand the mode's scope into new areas
+      </prompt>
     </question_set>
 
     <question_set name="during_changes">
-      <ask_followup_question>
-        <question>This change might affect other parts of the mode. How should we handle the impact on [specific area]?</question>
-        <follow_up>
-          <suggest>Update all affected areas to maintain consistency</suggest>
-          <suggest>Keep the existing behavior for backward compatibility</suggest>
-          <suggest>Create a migration path from old to new behavior</suggest>
-          <suggest>Let me review the impact first</suggest>
-        </follow_up>
-      </ask_followup_question>
+      <prompt>
+        This change might affect other parts of the mode. Choose an approach:
+        - Update all affected areas to maintain consistency
+        - Keep the existing behavior for backward compatibility
+        - Create a migration path from old to new behavior
+        - Review the impact first
+      </prompt>
     </question_set>
 
     <question_set name="after_changes">
-      <ask_followup_question>
-        <question>I've completed the changes and validation. Which aspect would you like me to test more thoroughly?</question>
-        <follow_up>
-          <suggest>Test the new workflow end-to-end</suggest>
-          <suggest>Verify file permissions work correctly</suggest>
-          <suggest>Check integration with other modes</suggest>
-          <suggest>Review all changes one more time</suggest>
-        </follow_up>
-      </ask_followup_question>
+      <prompt>
+        Post-change testing focus areas:
+        - Test the new workflow end-to-end
+        - Verify file permissions work correctly
+        - Check integration with other modes
+        - Review all changes one more time
+      </prompt>
     </question_set>
   </validation_questions>
 
   <red_flags>
     <flag priority="high">
-      <description>Instructions reference tools not in the mode's groups</description>
-      <action>Either add the tool group or remove the instruction</action>
+      <description>Instructions reference permissions not in the mode's groups</description>
+      <action>Either add the permission group or remove/update the instruction</action>
     </flag>
     <flag priority="high">
       <description>File regex doesn't match described file types</description>

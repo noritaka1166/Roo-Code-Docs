@@ -11,9 +11,9 @@
       <characteristics>
         <characteristic>Deep expertise in a particular area</characteristic>
         <characteristic>Restricted file access based on domain</characteristic>
-        <characteristic>Specialized tool usage patterns</characteristic>
+        <characteristic>Specialized workflows and decision criteria</characteristic>
       </characteristics>
-      <example_template><![CDATA[
+      <example_template>
 - slug: api-specialist
   name: 🔌 API Specialist
   roleDefinition: >-
@@ -41,7 +41,7 @@
         description: API implementation files, OpenAPI specs, and API documentation
     - command
     - mcp
-      ]]></example_template>
+      </example_template>
     </type>
 
     <type name="workflow_mode">
@@ -50,10 +50,10 @@
       </description>
       <characteristics>
         <characteristic>Step-by-step workflow guidance</characteristic>
-        <characteristic>Heavy use of ask_followup_question</characteristic>
+        <characteristic>Heavy use of focused clarifying questions</characteristic>
         <characteristic>Process validation at each step</characteristic>
       </characteristics>
-      <example_template><![CDATA[
+      <example_template>
 - slug: migration-guide
   name: 🔄 Migration Guide
   roleDefinition: >-
@@ -78,7 +78,7 @@
     - read
     - edit
     - command
-      ]]></example_template>
+      </example_template>
     </type>
 
     <type name="analysis_mode">
@@ -90,7 +90,7 @@
         <characteristic>Limited or no edit permissions</characteristic>
         <characteristic>Comprehensive reporting outputs</characteristic>
       </characteristics>
-      <example_template><![CDATA[
+      <example_template>
 - slug: security-auditor
   name: 🔒 Security Auditor
   roleDefinition: >-
@@ -116,7 +116,7 @@
     - - edit
       - fileRegex: (SECURITY\.md|\.github/security/.*|docs/security/.*)$
         description: Security documentation files only
-      ]]></example_template>
+      </example_template>
     </type>
 
     <type name="creative_mode">
@@ -128,7 +128,7 @@
         <characteristic>Template and boilerplate generation</characteristic>
         <characteristic>Interactive design process</characteristic>
       </characteristics>
-      <example_template><![CDATA[
+      <example_template>
 - slug: component-designer
   name: 🎨 Component Designer
   roleDefinition: >-
@@ -156,55 +156,80 @@
         description: Component files, stories, and component tests
     - browser
     - command
-      ]]></example_template>
+      </example_template>
     </type>
   </mode_types>
+
+  <autonomy_configuration>
+    <overview>Configuration patterns to keep modes focused, cohesive, and clearly scoped</overview>
+    <defaults>
+      <cohesion>Prefer a single source of truth for each rule; avoid duplicated instructions</cohesion>
+      <scope>Prefer least privilege; keep file restrictions aligned with purpose</scope>
+      <clarity>Define acceptance criteria and validation gates for typical tasks</clarity>
+      <handoffs>Define explicit boundaries and handoff points to other modes</handoffs>
+      <verbosity>Keep narrative brief; reserve detail for structured outputs and diffs</verbosity>
+    </defaults>
+    <per_mode_guidance>
+      <mode type="specialist_mode">
+        <notes>Tight scope, least privilege, clear boundaries; prefer small targeted changes</notes>
+      </mode>
+      <mode type="workflow_mode">
+        <notes>Step-by-step process with validation gates; ask clarifying questions only when necessary</notes>
+      </mode>
+      <mode type="analysis_mode">
+        <notes>Read-heavy; edits typically constrained to reporting or documentation outputs</notes>
+      </mode>
+      <mode type="creative_mode">
+        <notes>Broader creation scope; ensure examples and tests are included when applicable</notes>
+      </mode>
+    </per_mode_guidance>
+  </autonomy_configuration>
 
   <permission_patterns>
     <pattern name="documentation_only">
       <description>For modes that only work with documentation</description>
-      <configuration><![CDATA[
+      <configuration>
 groups:
   - read
   - - edit
     - fileRegex: \.(md|mdx|rst|txt)$
       description: Documentation files only
-      ]]></configuration>
+      </configuration>
     </pattern>
 
     <pattern name="test_focused">
       <description>For modes that work with test files</description>
-      <configuration><![CDATA[
+      <configuration>
 groups:
   - read
   - command
   - - edit
     - fileRegex: (__tests__/.*|__mocks__/.*|.*\.test\.(ts|tsx|js|jsx)$|.*\.spec\.(ts|tsx|js|jsx)$)
       description: Test files and mocks
-      ]]></configuration>
+      </configuration>
     </pattern>
 
     <pattern name="config_management">
       <description>For modes that manage configuration</description>
-      <configuration><![CDATA[
+      <configuration>
 groups:
   - read
   - - edit
     - fileRegex: (.*\.config\.(js|ts|json)|.*rc\.json|.*\.yaml|.*\.yml|\.env\.example)$
       description: Configuration files (not .env)
-      ]]></configuration>
+      </configuration>
     </pattern>
 
     <pattern name="full_stack">
       <description>For modes that need broad access</description>
-      <configuration><![CDATA[
+      <configuration>
 groups:
   - read
   - edit  # No restrictions
   - command
   - browser
   - mcp
-      ]]></configuration>
+      </configuration>
     </pattern>
   </permission_patterns>
 
@@ -239,12 +264,33 @@ groups:
 
   <integration_guidelines>
     <guideline name="orchestrator_compatibility">
-      <description>Ensure whenToUse is clear for Orchestrator mode</description>
+      <description>Ensure whenToUse/whenNotToUse are clear for Orchestrator mode</description>
       <checklist>
         <item>Specify concrete task types the mode handles</item>
         <item>Include trigger keywords or phrases</item>
         <item>Differentiate from similar modes</item>
         <item>Mention specific file types or areas</item>
+        <item>Define whenNotToUse with negative triggers and explicit handoffs</item>
+        <item>State stop/ask/handoff rules</item>
+        <item>State default verbosity policy (low narrative; verbose diffs)</item>
+      </checklist>
+    </guideline>
+
+    <guideline name="stop_and_handoff_rules">
+      <description>Define explicit stop conditions, confirmation thresholds, and handoff/ask triggers</description>
+      <checklist>
+        <item>Done-ness: acceptance criteria and validation gates are defined</item>
+        <item>Handoff rules to other modes or “ask a clarifying question” conditions are explicit</item>
+        <item>Boundaries, risks, and validation gates are documented</item>
+      </checklist>
+    </guideline>
+
+    <guideline name="verbosity_policy">
+      <description>Set verbosity defaults to keep narrative short and code edits clear</description>
+      <checklist>
+        <item>Low narrative verbosity in status/progress text</item>
+        <item>High detail only inside code diffs and structured outputs</item>
+        <item>Code clarity over cleverness; avoid code-golf and cryptic names</item>
       </checklist>
     </guideline>
 
@@ -253,7 +299,7 @@ groups:
       <checklist>
         <item>Avoid overlapping responsibilities</item>
         <item>Make handoff points explicit</item>
-        <item>Use switch_mode when appropriate</item>
+        <item>Switch modes when appropriate (mechanism varies)</item>
         <item>Document mode interactions</item>
       </checklist>
     </guideline>

@@ -14,17 +14,15 @@
         <fields>slug, name, roleDefinition, groups</fields>
       </item>
       <item priority="critical">
-        <check>No customInstructions field in .roomodes</check>
-        <validation>All instructions must be in XML files in .roo/rules-[slug]/</validation>
+        <check>Avoid large customInstructions blocks in .roomodes</check>
+        <validation>
+          Prefer storing substantial mode guidance in XML files under <code>.roo/rules-[slug]/</code>.
+          Small, high-level glue text in <code>customInstructions</code> is acceptable when needed.
+        </validation>
       </item>
       <item priority="high">
         <check>File restrictions use valid regex patterns</check>
-        <test_method><![CDATA[
-<search_files>
-<path>.</path>
-<regex>your_file_regex_here</regex>
-</search_files>
-        ]]></test_method>
+        <test_method>Validate by comparing the regex pattern against the intended file sets; confirm patterns match intended files and avoid overbroad matches.</test_method>
       </item>
       <item priority="high">
         <check>whenToUse clearly differentiates from other modes</check>
@@ -42,8 +40,8 @@
         <validation>Semantic tag names, proper nesting</validation>
       </item>
       <item>
-        <check>Examples use correct tool syntax</check>
-        <validation>Tool parameters match current API</validation>
+        <check>Examples avoid runtime implementation details</check>
+        <validation>Examples align with current permissions and constraints</validation>
       </item>
       <item>
         <check>File paths in examples are consistent</check>
@@ -57,8 +55,8 @@
         <test>Switch to the new mode and verify it loads</test>
       </item>
       <item>
-        <check>Tool permissions work as expected</check>
-        <test>Try using each tool group and verify access</test>
+        <check>Permissions work as expected</check>
+        <test>Verify representative actions for each permission category</test>
       </item>
       <item>
         <check>File restrictions are enforced</check>
@@ -79,23 +77,14 @@
         <action>Check that mode metadata displays correctly</action>
         <action>Confirm mode can be activated</action>
       </actions>
-      <verification><![CDATA[
-<ask_followup_question>
-<question>I've created the mode configuration. Can you see the new mode in your mode list?</question>
-<follow_up>
-<suggest>Yes, I can see the new mode and switch to it</suggest>
-<suggest>No, the mode doesn't appear in the list</suggest>
-<suggest>The mode appears but has errors when switching</suggest>
-</follow_up>
-</ask_followup_question>
-      ]]></verification>
+      <verification>Confirm via user feedback. If unclear, ask a focused clarifying question with options like: "Visible and switchable", "Not visible", or "Visible but errors".</verification>
     </step>
 
     <step number="2">
       <title>Permission Testing</title>
       <test_cases>
         <test case="read_permissions">
-          <action>Use read tools on various files</action>
+          <action>Verify read access works for representative files</action>
           <expected>All read operations should work</expected>
         </test>
         <test case="edit_restrictions">
@@ -104,7 +93,7 @@
         </test>
         <test case="edit_restrictions_negative">
           <action>Try editing restricted file types</action>
-          <expected>FileRestrictionError for non-matching files</expected>
+          <expected>An explicit permission/restriction error for non-matching files</expected>
         </test>
       </test_cases>
     </step>
@@ -124,7 +113,7 @@
       <areas>
         <area>Orchestrator mode compatibility</area>
         <area>Mode switching functionality</area>
-        <area>Tool handoff between modes</area>
+        <area>Capability handoff between modes</area>
         <area>Consistent behavior with other modes</area>
       </areas>
     </step>
@@ -149,10 +138,10 @@
         <cause>Wrong file path format</cause>
       </causes>
       <solution>Test regex pattern, use proper escaping</solution>
-      <example><![CDATA[
+      <example>
 # Wrong: *.ts (glob pattern)
 # Right: .*\.ts$ (regex pattern)
-      ]]></example>
+      </example>
     </issue>
 
     <issue type="behavior">
@@ -166,36 +155,25 @@
     </issue>
   </common_issues>
 
-  <debugging_tools>
-    <tool name="list_files">
-      <usage>Verify instruction files exist in correct location</usage>
-      <command><![CDATA[
-<list_files>
-<path>.roo</path>
-<recursive>true</recursive>
-</list_files>
-      ]]></command>
-    </tool>
+  <debugging_practices>
+    <practice>
+      <name>Directory/file inventory</name>
+      <usage>Verify instruction files exist in the correct location</usage>
+      <guidance>Check the .roo directory structure and ensure the expected rules-[slug] folder and XML files exist.</guidance>
+    </practice>
 
-    <tool name="read_file">
+    <practice>
+      <name>Configuration review</name>
       <usage>Check mode configuration syntax</usage>
-      <command><![CDATA[
-<read_file>
-<path>.roomodes</path>
-</read_file>
-      ]]></command>
-    </tool>
+      <guidance>Review .roomodes to validate YAML structure and entries for the target mode.</guidance>
+    </practice>
 
-    <tool name="search_files">
+    <practice>
+      <name>Regex validation</name>
       <usage>Test file restriction patterns</usage>
-      <command><![CDATA[
-<search_files>
-<path>.</path>
-<regex>your_file_pattern_here</regex>
-</search_files>
-      ]]></command>
-    </tool>
-  </debugging_tools>
+      <guidance>Use targeted checks conceptually to confirm fileRegex patterns match intended files and exclude others.</guidance>
+    </practice>
+  </debugging_practices>
 
   <best_practices>
     <practice>Test incrementally as you build the mode</practice>
