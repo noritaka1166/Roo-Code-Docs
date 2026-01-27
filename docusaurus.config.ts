@@ -177,6 +177,10 @@ const config: Config = {
             from: ['/features/experimental/intelligent-context-condensing', '/features/experimental/intelligent-context-condensation'],
           },
           {
+            to: '/features/experimental/experimental-features',
+            from: ['/features/experimental/power-steering'],
+          },
+          {
             to: '/advanced-usage/footgun-prompting',
             from: ['/features/footgun-prompting'],
           },
@@ -308,6 +312,12 @@ const config: Config = {
           {
             to: '/',
             from: ['/providers/claude-code'],
+          },
+
+          // Redirect removed Fast Edits feature page
+          {
+            to: '/',
+            from: ['/features/fast-edits'],
           },
         ],
       },
