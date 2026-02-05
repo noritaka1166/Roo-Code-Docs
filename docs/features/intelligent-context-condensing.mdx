@@ -58,7 +58,6 @@ Intelligent Context Condensing is **enabled by default** and offers several conf
     - **Automatically trigger intelligent context condensing**: Enabled by default, this controls whether condensing happens automatically (found in "Context" settings)
     - **Threshold to trigger intelligent context condensing**: A percentage slider (default 100%) that determines when condensing activates based on context window usage (found in "Context" settings)
     - **Custom Context Condensing Prompt**: Customize the prompt Roo uses when condensing (found in "Context Management" settings)
-    - **Condensing model**: Condensing uses your active conversation provider/model.
 
 <img src="/img/intelligent-context-condensing/intelligent-context-condensing.png" alt="Settings for Intelligent Context Condensing" width="600" />
 *Intelligent Context Condensing configuration options: automatic triggering toggle, threshold slider, and custom prompt customization.*
@@ -160,11 +159,11 @@ Roo Code uses a sophisticated token counting system that:
 
 #### Error handling strategy
 
-#### Why you can’t use a different model/provider for condensing (and why that’s good)
+#### Why you can't use a different model/provider for condensing (and why that's good)
 
 Condensing always uses your active conversation provider/model.
 
-Using a different model to condense can degrade summary quality when the history includes tool calls, tool results, or other structured content. Keeping condensing on the same model/provider avoids “translation” errors between different tool/format expectations.
+Using a different model to condense can degrade summary quality when the history includes tool calls, tool results, or other structured content. Keeping condensing on the same model/provider avoids "translation" errors between different tool/format expectations.
 
 #### How the custom condense prompt is stored (advanced)
 
