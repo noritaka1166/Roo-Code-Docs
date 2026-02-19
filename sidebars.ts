@@ -117,7 +117,6 @@ const sidebars: SidebarsConfig = {
             "advanced-usage/prompt-engineering",
             "advanced-usage/prompt-structure",
             "advanced-usage/rate-limits-costs",
-            "advanced-usage/footgun-prompting",
             "advanced-usage/roo-code-nightly",
           ],
         },

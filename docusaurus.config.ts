@@ -185,10 +185,6 @@ const config: Config = {
             from: ['/features/experimental/power-steering'],
           },
           {
-            to: '/advanced-usage/footgun-prompting',
-            from: ['/features/footgun-prompting'],
-          },
-          {
             to: '/features/codebase-indexing',
             from: ['/features/experimental/codebase-indexing'],
           },

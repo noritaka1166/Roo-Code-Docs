@@ -56,10 +56,15 @@ This tool retrieves skill instructions from the skills directory and loads them 
 
 When the `skill` tool is invoked, it follows this process:
 
-1. **Skill Resolution**: Searches for the named skill in:
-   - Current mode's skill directory (e.g., `.roo/skills-code/`)
-   - Project-level skills (override global skills)
-   - Global skills directory
+1. **Skill Resolution**: Searches for the named skill in the following locations (highest priority first):
+   - Project `.roo` mode-specific (e.g., `.roo/skills-code/`)
+   - Project `.roo` generic (`.roo/skills/`)
+   - Project `.agents` mode-specific (e.g., `.agents/skills-code/`)
+   - Project `.agents` generic (`.agents/skills/`)
+   - Global `.roo` mode-specific (e.g., `~/.roo/skills-code/`)
+   - Global `.roo` generic (`~/.roo/skills/`)
+   - Global `.agents` mode-specific (e.g., `~/.agents/skills-code/`)
+   - Global `.agents` generic (`~/.agents/skills/`)
 2. **Skill Loading**: Loads the skill's main instruction file (typically `SKILL.md`).
 3. **Context Injection**: Injects skill instructions into conversation context.
 4. **Linked Files**: Files referenced in the skill are **not** automatically loaded; Roo must explicitly read them if needed.

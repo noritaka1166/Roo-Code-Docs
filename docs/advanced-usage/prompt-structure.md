@@ -45,10 +45,6 @@ The system prompt is the foundation of Roo's behavior. It contains:
 
 The system prompt is generated dynamically each time you interact with Roo, adapting to your current mode, available tools, and custom settings.
 
-### Custom System Prompts
-
-Advanced users can create custom system prompts for specific modes by placing a `.roo/system-prompt-<mode_slug>` file in their workspace. When present, Roo uses this file instead of generating the standard system prompt sections, allowing for complete customization of Roo's behavior in that mode.
-
 ---
 
 ## User Messages
@@ -103,7 +99,6 @@ Internally, Roo's prompt construction is handled by several components:
 - **System Prompt Generation**: The `SYSTEM_PROMPT` function in `src/core/prompts/system.ts` assembles the complete system prompt
 - **Section Generators**: Specialized functions create each section of the system prompt
 - **Message Transformation**: Provider-specific transformers convert Roo's internal message format to the format required by each LLM API
-- **Custom Prompt Loading**: The `loadSystemPromptFile` function checks for and processes custom system prompt files
 
 ---
 
@@ -127,6 +122,5 @@ Understanding this structure can help you:
 - **Write Better Prompts**: Knowing what context Roo already has helps you avoid redundant information
 - **Troubleshoot Issues**: Understanding message flow helps identify where problems might occur
 - **Create Custom Modes**: With knowledge of the system prompt structure, you can create more effective custom modes
-- **Use Custom System Prompts**: Advanced users can create entirely custom system prompts for specialized use cases
 
 This technical foundation powers all of Roo's capabilities, enabling it to understand your requests and effectively utilize available tools to complete tasks.

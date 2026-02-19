@@ -212,7 +212,6 @@ customModes:
       - - edit  # First element of tuple
         - fileRegex: \.(md|mdx)$  # Second element is the options object
           description: Markdown files only
-      - browser
   - slug: another-mode
     name: Another Mode
     # ... other properties
@@ -231,8 +230,7 @@ customModes:
       "customInstructions": "Focus on clarity and completeness in documentation.",
       "groups": [
         "read",
-        ["edit", { "fileRegex": "\\.(md|mdx)$", "description": "Markdown files only" }],
-        "browser"
+        ["edit", { "fileRegex": "\\.(md|mdx)$", "description": "Markdown files only" }]
       ]
     },
     {
@@ -282,7 +280,7 @@ customModes:
 
 ##### `groups`
 *   **Purpose:** Array/list defining which tool groups the mode can access and any file restrictions.
-*   **Available Tool Groups (Strings):** `"read"`, `"edit"`, `"browser"`, `"command"`, `"mcp"`.
+*   **Available Tool Groups (Strings):** `"read"`, `"edit"`, `"command"`, `"mcp"`.
 *   **Structure:** The `groups` property uses a specific structure:
     *   Simple string for unrestricted access: `"edit"`
     *   Tuple (two-element array) for restricted access: `["edit", { fileRegex: "pattern", description: "optional" }]`
@@ -347,7 +345,6 @@ YAML is now the preferred format for defining custom modes due to several advant
         # Only allow reading files, no editing permissions
         groups:
           - read
-          - browser
     ```
 *   **Multi-line Strings:** YAML provides cleaner syntax for multi-line strings (e.g., for `roleDefinition` or `customInstructions`) using `|` (literal block) or `>` (folded block).
     ```yaml

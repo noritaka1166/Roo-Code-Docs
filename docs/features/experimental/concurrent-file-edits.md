@@ -1,12 +1,11 @@
 ---
 sidebar_label: 'Multi-File Edits'
-description: 'Speed up refactoring and multi-file changes with Roo Code''s experimental Concurrent File Edits feature. Edit multiple files in a single operation with batch approval.'
+description: 'Speed up refactoring and multi-file changes with Roo Code''s Concurrent File Edits feature. Edit multiple files in a single operation with batch approval.'
 keywords:
   - concurrent file edits
   - multi-file edits
   - batch editing
   - refactoring
-  - "Roo Code experimental features"
   - apply_diff
   - "batch approval"
 ---
@@ -78,26 +77,21 @@ When enabled, Roo automatically uses concurrent edits when appropriate. You'll s
 
 ## Technical Details
 
-This feature leverages the [`apply_diff`](/advanced-usage/available-tools/apply-diff#experimental-multi-file-edits-multi_file_apply_diff) tool's experimental multi-file capabilities. For detailed information about the implementation, XML format, and how the `MultiFileSearchReplaceDiffStrategy` works, see the [apply_diff documentation](/advanced-usage/available-tools/apply-diff#experimental-multi-file-edits-multi_file_apply_diff).
+This feature leverages the [`apply_diff`](/advanced-usage/available-tools/apply-diff) tool's multi-file capabilities. For detailed information about the implementation and diff format, see the [apply_diff documentation](/advanced-usage/available-tools/apply-diff).
 
 
 ---
 
 ## Best Practices
 
-### When to Enable
-- Using capable AI models (Claude 3.5 Sonnet, GPT-4, etc.)
-- Comfortable reviewing multiple changes at once
-
-### When to Keep Disabled
-- Working with less capable models that might struggle with complex multi-file contexts
-- Prefer reviewing each change individually
+- Use with capable AI models (Claude 3.5 Sonnet, GPT-4, etc.) for best results
+- Review all proposed changes carefully before approving
+- For very large batch operations, consider breaking the task into smaller chunks
 
 ---
 
 ## Limitations
 
-- **Experimental**: This feature is still being refined and may have edge cases
 - **Model dependent**: Works best with more capable AI models
 - **Token usage**: Initial requests may use more tokens due to larger context
 - **Complexity**: Very large batch operations might be harder to review
@@ -107,7 +101,6 @@ This feature leverages the [`apply_diff`](/advanced-usage/available-tools/apply-
 ## Troubleshooting
 
 ### Changes Not Batching
-- Verify the experimental flag is enabled in settings
 - Check that your model supports multi-file operations
 - Ensure files aren't restricted by `.rooignore`
 

@@ -214,7 +214,7 @@ Streamable HTTP configuration example:
 
   SSE (Legacy) configuration parameters:
 
-  *   `type` (optional, but recommended for clarity): Should be set to `"sse"` if providing a `url` for an SSE server, to distinguish from Streamable HTTP. If `url` is present and `type` is omitted, Roo Code might try to infer, but explicit declaration is safer.
+  *   `type` (required for URL-based configs): Must be set to `"sse"` when using a `url` for an SSE server. For stdio configs (those using `command`), `type` defaults to `"stdio"` and can be omitted. For any URL-based config, omitting `type` will cause an immediate error—Roo Code cannot infer the transport type from a `url` alone.
   *   `url` (required): The base URL for the remote MCP server. For legacy SSE, this usually implies separate paths like `/events` (for SSE stream) and `/message` (for POST requests) will be derived or expected by the server.
   *   `headers` (optional): An object containing custom HTTP headers to send with requests (e.g., for authentication tokens).
   *   `alwaysAllow` (optional): An array of tool names from this server to automatically approve.

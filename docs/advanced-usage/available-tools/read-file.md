@@ -28,16 +28,25 @@ The `read_file` tool accepts multiple files via the `args` format. Concurrency a
 
 ## Parameters
 
-The tool accepts parameters in two formats depending on your configuration:
+The tool accepts parameters in two formats:
 
 ### Standard Format (Single File)
 
 - `path` (required): The path of the file to read relative to the current working directory
-- `start_line` (optional): The starting line number to read from (1-based indexing)
-- `end_line` (optional): The ending line number to read to (1-based, inclusive)
+- `mode` (optional): Reading mode — `"slice"` (default) or `"indentation"`
+- `offset` (optional): 1-based line offset to start reading from (slice mode only, default: `1`)
+- `limit` (optional): Maximum number of lines to return (slice mode only, default: `2000`)
+- `indentation` (optional): Indentation-mode options — only used when `mode="indentation"`:
+  - `anchor_line` (required): 1-based line number to anchor the extraction. The tool extracts the complete semantic code block (function, class, method) containing this line.
+  - `max_levels` (optional): Maximum indentation levels to include above the anchor.
+  - `include_siblings` (optional): Whether to include sibling blocks at the same indentation level.
+  - `include_header` (optional): Whether to include file header content (imports, module-level comments) at the top of output.
+  - `max_lines` (optional): Hard cap on lines returned in indentation mode.
 
-:::note Legacy Format
-While the single-file parameters (`path`, `start_line`, `end_line`) are still supported for backward compatibility, we recommend using the newer `args` format for consistency and future compatibility.
+:::note Mode Summary
+- **Slice mode** (default): Reads lines sequentially from `offset` up to `limit` lines. Use for initial file exploration or reading a specific line range.
+- **Indentation mode**: Extracts complete, syntactically valid code blocks around `anchor_line` based on indentation hierarchy. Preferred when you have a target line number (e.g., from search results or error messages) and need the entire function/class without mid-function truncation.
+- **`start_line` and `end_line` do not exist** as parameters. Use `offset` and `limit` for range reads in slice mode.
 :::
 
 ### Enhanced Format (Multi-File)
@@ -147,7 +156,7 @@ When the `read_file` tool is invoked, it follows this process:
 The tool uses a clear decision hierarchy to determine how to read a file:
 
 1. **First Priority: Explicit Line Range**
-   - Legacy single‑file format: both `start_line` and `end_line` must be provided for a range read; otherwise it reads normally.
+   - Single‑file format: specify `offset` and `limit` for a range read in slice mode, or use `anchor_line` in indentation mode.
    - Multi‑file `args` format: specify one or more `line_range` entries per file.
    - Range reads stream only the requested lines and bypass `maxReadFileLine`, taking precedence over other options.
 
@@ -160,7 +169,7 @@ The tool uses a clear decision hierarchy to determine how to read a file:
 
 3. **Third Priority: Automatic Truncation for Large Text Files**
    - Applies only when all of the following are true:
-     - Neither `start_line` nor `end_line` is specified.
+     - No `offset`/`limit` range is specified (slice mode) and no `anchor_line` is provided (indentation mode).
      - The file is identified as a text‑based file (not binary like PDF/DOCX/XLSX/IPYNB).
      - The file's total line count exceeds the `maxReadFileLine` setting (configurable; UI default may be 500; backend uses `-1`—no line limit—when unset).
    - When automatic truncation occurs:
@@ -208,14 +217,14 @@ To read the complete content of a file:
 
 ### Reading Specific Lines
 
-To read only a specific range of lines (e.g., 46-68):
+To read only a specific range of lines (e.g., lines 46-68), use `offset` and `limit` in slice mode:
 
 **Input:**
 ```xml
 <read_file>
 <path>src/app.js</path>
-<start_line>46</start_line>
-<end_line>68</end_line>
+<offset>46</offset>
+<limit>23</limit>
 </read_file>
 ```
 
@@ -337,12 +346,12 @@ This behavior ensures that:
 - You receive guidance to use `line_range` for targeted reads
 - Stream errors are handled gracefully
 
-**Example with line_range for targeted reading:**
+**Example with offset/limit for targeted reading:**
 ```xml
 <read_file>
 <path>logs/massive-debug.log</path>
-<start_line>1000</start_line>
-<end_line>1100</end_line>
+<offset>1000</offset>
+<limit>101</limit>
 </read_file>
 ```
 
@@ -639,9 +648,9 @@ This allows Roo to analyze documentation, visual diagrams, configuration, and sp
 ## Troubleshooting
 
 - Range read returns error
-  - Cause: `start_line`/`end_line` invalid or `start_line > end_line`
-  - Fix: Provide both `start_line` and `end_line` as positive integers with `start_line ≤ end_line`; or use `args` with one or more `line_range` entries.
-  - Prevention: Prefer `line_range` in the multi‑file format for targeted reads.
+  - Cause: Invalid `offset` or `limit` values (e.g., non-positive integers).
+  - Fix: Use `offset` (1-based starting line) and `limit` (max lines to return) as positive integers in slice mode; or use `anchor_line` in indentation mode; or use the multi-file `args` format with `line_range` entries.
+  - Prevention: Prefer the multi-file `args` format with `line_range` for targeted reads across multiple files.
 
 - Large file returned a preview
   - Cause: File exceeded token budget or the large‑file tokenization threshold; a preview was returned.

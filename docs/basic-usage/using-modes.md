@@ -66,7 +66,7 @@ Four ways to switch modes:
 |--------|---------|
 | **Name** | `💻 Code` |
 | **Description** | A skilled software engineer with expertise in programming languages, design patterns, and best practices |
-| **Tool Access** | Full access to all tool groups: `read`, `edit`, `browser`, `command`, `mcp` |
+| **Tool Access** | Full access to all tool groups: `read`, `edit`, `command`, `mcp` |
 | **Ideal For** | Writing code, implementing features, debugging, and general development |
 | **Special Features** | No tool restrictions—full flexibility for all coding tasks |
 
@@ -76,7 +76,7 @@ Four ways to switch modes:
 |--------|---------|
 | **Name** | `❓ Ask` |
 | **Description** | A knowledgeable technical assistant focused on providing thorough and complete answers. It's less inclined to switch to implementing code unless explicitly requested and may use diagrams for clarification. |
-| **Tool Access** | Limited access: `read`, `browser`, `mcp` only (cannot edit files or run commands) |
+| **Tool Access** | Limited access: `read`, `mcp` only (cannot edit files or run commands) |
 | **Ideal For** | Code explanation, concept exploration, and technical learning |
 | **Special Features** | Optimized for detailed, informative responses, often using diagrams for clarity, without modifying your project. |
 
@@ -86,7 +86,7 @@ Four ways to switch modes:
 |--------|---------|
 | **Name** | `🏗️ Architect` |
 | **Description** | An experienced technical leader and planner who helps design systems and create implementation plans |
-| **Tool Access** | Access to `read`, `browser`, `mcp`, and restricted `edit` (markdown files only) |
+| **Tool Access** | Access to `read`, `mcp`, and restricted `edit` (markdown files only) |
 | **Ideal For** | System design, high-level planning, and architecture discussions |
 | **Special Features** | Follows a structured approach from information gathering to detailed planning |
 
@@ -96,7 +96,7 @@ Four ways to switch modes:
 |--------|---------|
 | **Name** | `🪲 Debug` |
 | **Description** | An expert problem solver specializing in systematic troubleshooting and diagnostics |
-| **Tool Access** | Full access to all tool groups: `read`, `edit`, `browser`, `command`, `mcp` |
+| **Tool Access** | Full access to all tool groups: `read`, `edit`, `command`, `mcp` |
 | **Ideal For** | Tracking down bugs, diagnosing errors, and resolving complex issues |
 | **Special Features** | Uses a methodical approach of analyzing, narrowing possibilities, and fixing issues. Includes custom instructions to reflect, distill possibilities, add logs, and confirm before fixing. |
 
@@ -121,7 +121,6 @@ Tailor Roo Code's behavior by customizing existing modes or creating new special
 Each tool group provides specific capabilities:
 - **`read`**: File reading, listing, and searching capabilities
 - **`edit`**: File modification and creation capabilities
-- **`browser`**: Web browsing and search capabilities
 - **`command`**: Terminal command execution
 - **`mcp`**: Model Context Protocol server interactions
 

@@ -114,10 +114,12 @@ Streamable HTTP transport is ideal for:
 
 Configuration in `settings.json`:
 ```json
-"mcp.servers": {
-  "StreamableHTTPMCPName": {
-    "type": "streamable-http",
-    "url": "http://localhost:8080/mcp"
+{
+  "mcpServers": {
+    "StreamableHTTPMCPName": {
+      "type": "streamable-http",
+      "url": "http://localhost:8080/mcp"
+    }
   }
 }
 ```

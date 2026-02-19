@@ -38,7 +38,7 @@ Temperature controls output randomness, not code quality or accuracy directly. K
 
 Roo Code uses a default temperature of 0.0 for most models, optimizing for maximum determinism and precision in code generation. This applies to OpenAI models, Anthropic models (non-thinking variants), LM Studio models, and most other providers.
 
-Some models use higher default temperatures - DeepSeek R1 models and certain reasoning-focused models default to 0.6, providing a balance between determinism and creative exploration.
+Some models use higher default temperatures - DeepSeek R1 models and certain reasoning-focused models default to 0.3, providing a balance between determinism and creative exploration.
 
 Models with thinking capabilities (where the AI shows its reasoning process) require a fixed temperature of 1.0 which cannot be changed, as this setting ensures optimal performance of the thinking mechanism. This applies to any model with the ":thinking" flag enabled.
 
